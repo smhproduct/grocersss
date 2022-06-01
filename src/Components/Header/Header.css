@@ -6,7 +6,13 @@
 .Brand {
     color: white;
     font-size: 15px;
-    margin-top: -10px;
+    margin-top: -20px;
+
+}
+
+.Brand:hover {
+    color: white !important;
+    text-decoration: none;
 }
 
 .NavLink {
@@ -21,6 +27,17 @@
 .NavLink:hover {
     color: wheat !important;
     text-decoration: none;
+
+}
+
+.Cart {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 30%;
+}
+
+.Cart:hover {
+    background-color: grey;
 }
 
 /*.active {
