@@ -6,12 +6,12 @@ import Cart from "./GroceryShop/Cart";
 import { CartProvider } from "react-use-cart";
 import { Route, Routes } from "react-router-dom";
 
+
 const Main = props => {
     return (
         <div>
-            <Header />
-
             <CartProvider>
+                <Header />
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/cart' element={<Cart />} />

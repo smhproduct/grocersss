@@ -1,3 +1,28 @@
 .card:hover {
     transform: scale(1.03);
+    overflow: hidden;
+}
+
+.atc {
+    background-color: 'white';
+    border: '2px solid #D70F64';
+    color: '#D70F64';
+}
+
+.atc:hover {
+    background-color: '#D70F64';
+    border: '2px solid #D70F64';
+    color: white
+}
+
+.scrolltopbtn {
+    position: fixed;
+    width: 100%;
+    left: 92%;
+    bottom: 15%;
+    height: 20px;
+    font-size: 4rem;
+    z-index: 1;
+    cursor: pointer;
+    color: #D70F64;
 }
