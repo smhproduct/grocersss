@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaArrowCircleUp } from 'react-icons/fa';
+import { IoChevronUpCircle } from 'react-icons/io5';
 import './ItemCard.css';
 import styled from 'styled-components';
 
@@ -42,7 +42,7 @@ const Top = () => {
 
     return (
         <Button>
-            <FaArrowCircleUp onClick={scrollToTop}
+            <IoChevronUpCircle onClick={scrollToTop}
                 style={{ display: visible ? 'inline' : 'none' }} />
         </Button>
     );

@@ -1,6 +1,5 @@
 import React from "react";
 import { useCart } from "react-use-cart";
-import { Button } from "reactstrap";
 import './ItemCard.css';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';

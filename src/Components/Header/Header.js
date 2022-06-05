@@ -15,10 +15,10 @@ const Header = () => {
         totalItems
     } = useCart();
     return (
-        <div className='Navigation'>
+        <div className='Navigation fixed-top'>
             <Navbar style={{
                 backgroundColor: '#D70F64',
-                height: '70px',
+                height: '70px'
             }}>
                 <NavbarBrand href="/" className=' ml-md-5 Brand'>
                     <img src={Logo} alt="Logo" width='105px' style={{ marginLeft: '-13px' }} />
@@ -28,7 +28,7 @@ const Header = () => {
                         <NavLink to="/" className="NavLink">Home</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink to="/cart" className="NavLink Cart"><button style={{ marginTop: '-5px' }} type="button" className="p-0 btn position-relative">
+                        <NavLink to="/cartadvanced" className="NavLink Cart"><button style={{ marginTop: '-5px' }} type="button" className="p-0 btn position-relative">
                             <img width='45px' height='45px' src={CartIcon} alt="Cart" />
                             <span style={{ backgroundColor: "white", color: "#D70F64" }} className="position-absolute top-0 start-100 translate-middle badge rounded-pill">
                                 {totalItems}

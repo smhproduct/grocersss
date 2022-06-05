@@ -1,13 +1,13 @@
 import React from "react";
 import { useCart } from "react-use-cart";
 import './ItemCard.css';
-import IconButton from '@mui/material/IconButton';
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
+import { useSnackbar } from "notistack";
+
 
 
 const Cart = () => {
@@ -23,6 +23,24 @@ const Cart = () => {
     } = useCart();
     const buy = () => {
         alert("No Connection!");
+    };
+
+    const { enqueueSnackbar } = useSnackbar();
+    const handleClickVariant = (variant) => {
+        switch (variant) {
+            case 'success':
+                enqueueSnackbar('Item Added Successfully!', { variant });
+                break;
+            case 'error':
+                enqueueSnackbar('Item Removed Completely!', { variant });
+                break;
+            case 'secondary':
+                enqueueSnackbar('Item Removed Successfully!', { variant });
+                break;
+            default:
+                return;
+        }
+
     };
     if (isEmpty) return <h1 className="text-center"> Your cart is empty </h1>;
     return (
@@ -42,62 +60,30 @@ const Cart = () => {
                                             <img className="card" src={item.img} style={{ height: "6rem" }} alt={item.title} />
                                         </td>
 
-                                        <td>{item.title}</td>
+                                        <td style={{ fontWeight: 'bold' }}>{item.title}</td>
 
-                                        <td>Price: BDT {item.price}</td>
+                                        <td style={{ fontWeight: 'bold' }}>Price: BDT {item.price * item.quantity}</td>
 
-                                        <td>Quantity({item.quantity})</td>
+                                        <td style={{ fontWeight: 'bold' }}> (x{item.quantity})</td>
 
                                         <td>
-                                            {/*
-                                            <button
-                                                onClick={() =>
-                                                    updateItemQuantity(item.id, item.quantity - 1)
-                                                }
-                                                className="btn btn-sm btn-secondary ms-2"
-                                            >
-                                                {" "}
-                                                -{" "}
-                                            </button>
-                                            <button
-                                                onClick={() =>
-                                                    updateItemQuantity(item.id, item.quantity + 1)
-                                                }
-                                                className="btn btn-sm btn-secondary ms-2" 
-                                            >
-                                                {" "}
-                                                +{" "}
-                                            </button>
-                                            {/*<button
-                                                onClick={() => removeItem(item.id)}
-                                                className="btn ms-2"
-                                                style={{ backgroundColor: "#D70F64", color: "white" }}
-                                            >
-                                                {" "}
-                                                RemoveItem{" "}
-                                            </button>}
-                                            <IconButton onClick={() => removeItem(item.id)} aria-label="delete" size='large' ><DeleteIcon fontSize="inherit" /></IconButton>
-                            */}
-
                                             <ButtonGroup>
 
                                                 <Button
-                                                    aria-label="increase" color="success" onClick={() =>
-                                                        updateItemQuantity(item.id, item.quantity + 1)}
+                                                    aria-label="increase" color="success" onClick={() => { updateItemQuantity(item.id, item.quantity + 1); handleClickVariant('success'); }}
 
 
                                                 >
                                                     <AddIcon fontSize="small" />
                                                 </Button>
                                                 <Button
-                                                    aria-label="reduce" color="error" onClick={() =>
-                                                        updateItemQuantity(item.id, item.quantity - 1)
-                                                    }
+                                                    aria-label="reduce" color="error" onClick={() => { updateItemQuantity(item.id, item.quantity - 1); handleClickVariant('secondary'); }}
+
 
                                                 >
                                                     <RemoveIcon fontSize="small" />
                                                 </Button>
-                                                <Button onClick={() => removeItem(item.id)} style={{ backgroundColor: "#D70F64", color: "white", }} variant="conatined">
+                                                <Button onClick={() => { removeItem(item.id); handleClickVariant('error'); }} style={{ backgroundColor: "#D70F64", color: "white", }} variant="conatined">
                                                     <DeleteIcon />
 
                                                 </Button>
@@ -111,17 +97,12 @@ const Cart = () => {
                         </tbody>
                     </table>
                     <br />
-                    <div className="col-auto ms-auto">
-                        <h3> Total Price: BDT {cartTotal} </h3>
-                    </div>
+
                     <br />
                 </div>
                 <div className="col-auto mb-2">
-                    <button onClick={() => emptyCart()} className="btn btn-secondary">
+                    <button onClick={() => { handleClickVariant('error'); emptyCart() }} className="btn btn-secondary">
                         Clear Cart
-                    </button>
-                    <button onClick={buy} style={{ backgroundColor: "#D70F64", color: "white" }} className="btn ms-2">
-                        Buy Now{" "}
                     </button>
                 </div>
             </div>

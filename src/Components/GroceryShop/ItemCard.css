@@ -14,15 +14,3 @@
     border: '2px solid #D70F64';
     color: white
 }
-
-.scrolltopbtn {
-    position: fixed;
-    width: 100%;
-    left: 92%;
-    bottom: 15%;
-    height: 20px;
-    font-size: 4rem;
-    z-index: 1;
-    cursor: pointer;
-    color: #D70F64;
-}

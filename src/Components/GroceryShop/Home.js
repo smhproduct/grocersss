@@ -11,7 +11,7 @@ const Home = () => {
                 <div className="row justify-content-center">
                     {data.productData.map((item, index) => {
                         return (
-                            <div className="col-xl-2 col-md-3 col-sm-4 m-1">
+                            <div className="col-xl-2 m-xl-2 col-md-3 col-sm-4 m-1">
                                 <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
                                     <ItemCard
                                         img={item.img}
