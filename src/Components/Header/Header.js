@@ -14,7 +14,11 @@ const Header = () => {
     const {
         totalItems
     } = useCart();
+
+
+
     return (
+
         <div className='Navigation fixed-top'>
             <Navbar style={{
                 backgroundColor: '#D70F64',

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCart } from "react-use-cart";
 import './ItemCard.css';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useSnackbar } from 'notistack';
+import { ModalBody, Modal, ModalFooter, ModalHeader, Button } from "reactstrap";
 
 const ItemCard = (props) => {
 
@@ -17,24 +18,65 @@ const ItemCard = (props) => {
 
 
     const handleClickVariant = (variant) => {
-        enqueueSnackbar('Item Added Successfully!', { variant });
+        enqueueSnackbar(props.title + ' Added To Cart!', { variant });
     };
+
+    const [modal, setModal] = useState(false);
+    const toggleModal = () => setModal(!modal);
     return (
+        <div>
+            <div onClick={toggleModal} className="card mb-3 shadow" style={{ width: "100%", height: '280px', borderRadius: '10%', padding: '10px', cursor: 'pointer' }}>
+                <img className="card-img-top img-fluid" style={{ height: "50%" }} src={props.img} alt={props.title} />
+                <div className="card-body text-center">
+                    <div style={{}} className="card-title">{props.title}</div>
+                </div>
+                <div style={{ overflow: 'hidden' }} className="card-footer row">
+                    <p style={{ fontSize: 'medium', paddingTop: '5px', fontWeight: 'bold' }} className="card-text col">BDT {props.price}
+                        <IconButton style={{ float: 'right', marginTop: '-8px' }} color="primary" aria-label="add to shopping cart" onClick={() => addItemHandler(props)}>
+                            <AddShoppingCartIcon style={{ color: "#D70F64" }} />
+                        </IconButton>
+                    </p>
 
-        <div className="card mb-3 shadow" style={{ width: "110%", height: '280px', borderRadius: '10%', padding: '10px' }}>
-            <img className="card-img-top img-fluid" style={{ height: "45%" }} src={props.img} alt={props.title} />
-            <div className="card-body text-center">
-                <div style={{}} className="card-title">{props.title}</div>
-            </div>
-            <div style={{ overflow: 'hidden' }} className="card-footer row">
-                <p style={{ fontSize: 'medium', paddingTop: '5px', fontWeight: 'bold' }} className="card-text col">BDT {props.price}
-                    <IconButton style={{ float: 'right', marginTop: '-8px' }} color="primary" aria-label="add to shopping cart" onClick={() => addItemHandler(props)}>
-                        <AddShoppingCartIcon style={{ color: "#D70F64" }} />
-                    </IconButton>
-                </p>
+                </div>
+            </div >
+            <Modal
+                isOpen={modal} toggle={toggleModal} size='lg' centered scrollable
+            >
 
-            </div>
-        </div >
+                <ModalBody>
+                    <div className="row container my-2 justify-content-center">
+                        <div className="col" style={{ alignItems: 'center' }} width='50%' height="100%">
+                            <img src={props.img} width='100%' height='250px' style={{ paddingLeft: '15%', paddingTop: '15%' }} />
+                        </div>
+                        <div className="col align-middle" width='50%' style={{ textAlign: 'center', paddingTop: '15%' }}>
+                            <h3>{props.title}</h3>
+                            <h2>Tk. {props.price}</h2>
+                            <Button
+                                color="danger" size="small"
+                                outline
+                                onClick={() => addItemHandler(props)}
+                            >
+                                Add To Cart
+                            </Button>
+                            {' '}
+                            <Button color="secondary" size="small" outline onClick={toggleModal}>
+                                Cancel
+                            </Button>
+                        </div>
+                    </div>
+                    <br /><br />
+                    <hr />
+                    <div className="p-4" Align='left'>
+                        <h5>Product Description:</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </ModalBody>
+
+            </Modal>
+
+        </div>
+
 
 
     );

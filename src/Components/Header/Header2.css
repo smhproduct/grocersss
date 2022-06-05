@@ -1,0 +1,12 @@
+.nav {
+    height: 70px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    transition-timing-function: ease-in;
+    transition: 0.5s
+}
+
+.nav_color {
+    background-color: #D70F64;
+}

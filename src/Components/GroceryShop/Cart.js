@@ -44,7 +44,7 @@ const Cart = () => {
     };
     if (isEmpty) return <h1 className="text-center"> Your cart is empty </h1>;
     return (
-        <section className="container-md container-xs-fluid">
+        <section className="container-lg container-xs-fluid">
             <div className="row jistufy-content-center">
                 <div className="col-12">
                     <h5>
@@ -56,8 +56,8 @@ const Cart = () => {
                             {items.map((item, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>
-                                            <img className="card" src={item.img} style={{ height: "6rem" }} alt={item.title} />
+                                        <td width='100px'>
+                                            <img className="card" src={item.img} style={{ width: '100%' }} alt={item.title} />
                                         </td>
 
                                         <td style={{ fontWeight: 'bold' }}>{item.title}</td>

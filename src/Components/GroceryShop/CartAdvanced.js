@@ -19,9 +19,9 @@ const CartAdvanced = () => {
                 <div className=" container-fluid col-md- col-lg-9">
                     <Cart />
                 </div>
-                <div className="bg-light shadow container-fluid pb-4  col-lg-3">
+                {cartTotal > 0 && (<div style={{ overflowY: 'hidden' }} className="bg-light shadow container-fluid pb-4  col-lg-3">
                     <Bill />
-                </div>
+                </div>)}
             </Row>
         </div>
 
@@ -29,3 +29,21 @@ const CartAdvanced = () => {
 };
 
 export default CartAdvanced;
+
+/*
+<div className="container-fluid" style={{ marginTop: '72px' }}>
+            <Row
+                lg="2"
+
+                xs="1"
+            >
+                <div style={{ left: '0' }} className=" col-lg-9">
+                <Cart />
+                </div>
+                {cartTotal > 0 && (<div style={{ height: '100vh', position: 'fixed', right: '0' }} className="bg-light shadow offset-lg-3  container-fluid pb-4  col-lg-3">
+                    <Bill />
+                </div>)}
+            </Row>
+        </div>
+        
+*/
