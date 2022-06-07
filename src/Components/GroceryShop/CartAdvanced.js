@@ -10,7 +10,7 @@ const CartAdvanced = () => {
     } = useCart();
 
     return (
-        <div className="container-fluid" style={{ marginTop: '72px' }}>
+        <div className="container-fluid" style={{ marginTop: '85px' }}>
             <Row
                 lg="2"
 
@@ -19,7 +19,7 @@ const CartAdvanced = () => {
                 <div className=" container-fluid col-md- col-lg-9">
                     <Cart />
                 </div>
-                {cartTotal > 0 && (<div style={{ overflowY: 'hidden' }} className="bg-light shadow container-fluid pb-4  col-lg-3">
+                {cartTotal > 0 && (<div style={{}} className="bg-light shadow container-fluid pb-4  col-lg-3">
                     <Bill />
                 </div>)}
             </Row>

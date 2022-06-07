@@ -3,6 +3,7 @@ import Logo from '../../assets/grocersss.png';
 import CartIcon from '../../assets/cart.png';
 import { NavLink } from 'react-router-dom';
 import { useCart } from "react-use-cart";
+
 import {
     Navbar,
     NavbarBrand,
@@ -25,7 +26,7 @@ const Header = () => {
                 height: '70px'
             }}>
                 <NavbarBrand href="/" className=' ml-md-5 Brand'>
-                    <img src={Logo} alt="Logo" width='105px' style={{ marginLeft: '-13px' }} />
+                    <img src={Logo} alt="Logo" width='120px' height="78px" style={{ marginLeft: '-13px' }} />
                 </NavbarBrand>
                 <Nav className=' pt-2'>
                     <NavItem>
@@ -42,6 +43,14 @@ const Header = () => {
                     </NavItem>
                 </Nav>
             </Navbar>
+
+            {/* <div className='col-12 col-md-6 mt-2'>
+                <Routes>
+                    <Route render={({ history }) => <Search1 history={history} />} />
+                </Routes>
+
+            </div> */}
+
         </div>
     )
 }

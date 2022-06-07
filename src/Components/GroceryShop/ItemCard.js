@@ -25,8 +25,8 @@ const ItemCard = (props) => {
     const toggleModal = () => setModal(!modal);
     return (
         <div>
-            <div onClick={toggleModal} className="card mb-3 shadow" style={{ width: "100%", height: '280px', borderRadius: '10%', padding: '10px', cursor: 'pointer' }}>
-                <img className="card-img-top img-fluid" style={{ height: "50%" }} src={props.img} alt={props.title} />
+            <div className="card mb-3 shadow" style={{ width: "100%", height: '280px', borderRadius: '10%', padding: '10px', cursor: 'pointer' }}>
+                <img onClick={toggleModal} className="card-img-top img-fluid" style={{ height: "50%" }} src={props.img} alt={props.title} />
                 <div className="card-body text-center">
                     <div style={{}} className="card-title">{props.title}</div>
                 </div>
@@ -51,7 +51,7 @@ const ItemCard = (props) => {
                         <div className="col align-middle" width='50%' style={{ textAlign: 'center', paddingTop: '15%' }}>
                             <h3>{props.title}</h3>
                             <h2>Tk. {props.price}</h2>
-                            <Button
+                            <Button className="btn"
                                 color="danger" size="small"
                                 outline
                                 onClick={() => addItemHandler(props)}
@@ -59,7 +59,7 @@ const ItemCard = (props) => {
                                 Add To Cart
                             </Button>
                             {' '}
-                            <Button color="secondary" size="small" outline onClick={toggleModal}>
+                            <Button className="btn" color="secondary" size="small" outline onClick={toggleModal}>
                                 Cancel
                             </Button>
                         </div>
@@ -68,8 +68,7 @@ const ItemCard = (props) => {
                     <hr />
                     <div className="p-4" Align='left'>
                         <h5>Product Description:</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                        </p>
+                        <p>{props.desc}</p>
                     </div>
                 </ModalBody>
 

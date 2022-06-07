@@ -1,0 +1,22 @@
+.templateContainer {
+    margin: 95px 0 20px 0;
+
+}
+
+.templateContainer>.searchInput_Container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+
+
+}
+
+.templateContainer>.searchInput_Container input {
+    width: 80%;
+    padding: 10px;
+    outline: none;
+    outline-color: white;
+    border-radius: 20px;
+    box-shadow: none;
+}
