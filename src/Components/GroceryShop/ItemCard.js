@@ -4,7 +4,7 @@ import './ItemCard.css';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useSnackbar } from 'notistack';
-import { ModalBody, Modal, ModalFooter, ModalHeader, Button } from "reactstrap";
+import { ModalBody, Modal, Button } from "reactstrap";
 
 const ItemCard = (props) => {
 
@@ -46,7 +46,7 @@ const ItemCard = (props) => {
                 <ModalBody>
                     <div className="row container my-2 justify-content-center">
                         <div className="col" style={{ alignItems: 'center' }} width='50%' height="100%">
-                            <img src={props.img} width='100%' height='250px' style={{ paddingLeft: '15%', paddingTop: '15%' }} />
+                            <img src={props.img} alt={props.title} width='100%' height='250px' style={{ paddingLeft: '15%', paddingTop: '15%' }} />
                         </div>
                         <div className="col align-middle" width='50%' style={{ textAlign: 'center', paddingTop: '15%' }}>
                             <h3>{props.title}</h3>
@@ -66,7 +66,7 @@ const ItemCard = (props) => {
                     </div>
                     <br /><br />
                     <hr />
-                    <div className="p-4" Align='left'>
+                    <div className="p-4" align='left'>
                         <h5>Product Description:</h5>
                         <p>{props.desc}</p>
                     </div>

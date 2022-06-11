@@ -12,7 +12,7 @@ const data = {
             id: 1,
             img: images['green chili.jpg'],
             title: 'Green Chili-250g',
-            desc: "Green chile peppers widely vary in size and shape, appearing slightly curved to straight, and can contain different levels of spice depending on the individual variety.",
+            desc: "Green chili peppers widely vary in size and shape, appearing slightly curved to straight, and can contain different levels of spice depending on the individual variety.",
             category: 'Vegetables',
             price: 46,
         },
