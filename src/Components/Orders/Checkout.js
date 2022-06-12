@@ -31,7 +31,7 @@ const Checkout = () => {
         modalMsg: '',
         disablePlaceOrder: true
 
-    });
+    })
     const isLoading = state.isLoading;
     const isModalOpen = state.isModalOpen;
     const modalMsg = state.modalMsg;
@@ -43,7 +43,7 @@ const Checkout = () => {
                 ...prevState,
                 isLoading: true,
             }
-        })
+        });
 
         const order = {
             items: items,
@@ -93,13 +93,13 @@ const Checkout = () => {
         <div className='container'>
             <h4 style={
                 {
-                    border: '1px solid grey',
-                    boxShadow: '1px 1px #888888',
+                    border: '1px solid #d70f64',
+                    boxShadow: '2px 2px #d70f64',
                     borderRadius: '5px',
                     padding: '20px',
                 }
             }>Payment: BDT {cartTotal}</h4>
-            <Table borderless>
+            <Table style={{ marginTop: '30px' }} borderless>
                 <tbody>
                     <tr>
                         <td>
@@ -127,13 +127,13 @@ const Checkout = () => {
                     </tr>
                     <tr>
                         <td>
-                            <h6>Voucher</h6>
+                            <h6 style={{ color: 'red' }}>Voucher</h6>
                         </td>
                         <td allign="right">
-                            <h6>Tk0 </h6>
+                            <h6 style={{ color: 'red' }}>Tk0 </h6>
                         </td>
                     </tr>
-                    <tr style={{ borderTop: '1px solid grey' }}>
+                    <tr style={{ borderTop: '1px solid black' }}>
                         <td>
                             <h6>Total(incl. VAT)</h6>
                         </td>
@@ -146,8 +146,8 @@ const Checkout = () => {
 
             <h4 style={
                 {
-                    border: '1px solid grey',
-                    boxShadow: '1px 1px #888888',
+                    border: '1px solid #d70f64',
+                    boxShadow: '2px 2px #d70f64',
                     borderRadius: '5px',
                     padding: '20px',
                 }
@@ -199,8 +199,7 @@ const Checkout = () => {
                 }) => (
                     <form style={
                         {
-                            border: '1px solid grey',
-                            boxShadow: '1px 1px #888888',
+                            border: '2px solid #d70f64',
                             borderRadius: '5px',
                             padding: '20px',
                         }
@@ -232,7 +231,7 @@ const Checkout = () => {
         </div>
     )
     return (
-        <div style={{ marginTop: '100px' }}>
+        <div style={{ marginTop: '100px', marginBottom: '50px' }}>
             {isLoading ? <Spinner /> : form}
 
             <Modal isOpen={isModalOpen}>

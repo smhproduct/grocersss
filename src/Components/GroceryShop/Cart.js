@@ -42,7 +42,15 @@ const Cart = () => {
         }
 
     };
-    if (isEmpty) return <h1 className="text-center"> Your cart is empty </h1>;
+    if (isEmpty) return <h4 style={
+        {
+            border: '1px solid #d70f64',
+            boxShadow: '3px 3px #d70f64',
+            borderRadius: '5px',
+            padding: '20px',
+            textAlign: 'center'
+        }
+    }>Your Cart is empty</h4>;
     return (
         <section className="container-lg container-xs-fluid">
             <div className="row jistufy-content-center">
