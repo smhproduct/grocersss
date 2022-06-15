@@ -6,6 +6,7 @@ import { useCart } from "react-use-cart";
 import axios from 'axios';
 import Spinner from '../Spinner/Spinner';
 import { Formik } from 'formik';
+import { TextField } from '@mui/material';
 
 const Checkout = () => {
 
@@ -216,7 +217,8 @@ const Checkout = () => {
                         <input name="phone" id='phone' className='form-control' value={values.phone} placeholder='Your Phone Number' onChange={handleChange} onBlur={handleBlur} />
                         <span style={{ color: 'red' }}>{errors.phone}</span>
                         <br />
-                        <select name='paymentType' id='paymentType' className='form-control' value={values.paymentType} onBlur={handleBlur} onChange={handleChange} >
+                        {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                       */}  <select name='paymentType' id='paymentType' className='form-control' value={values.paymentType} onBlur={handleBlur} onChange={handleChange} >
                             <option value="Cash On Delivery">Cash On Delivery</option>
                             <option value="Bkash">Bkash</option>
                         </select>

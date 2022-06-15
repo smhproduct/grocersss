@@ -33,6 +33,9 @@ const Header = () => {
                         <NavLink to="/" className="NavLink">Home</NavLink>
                     </NavItem>
                     <NavItem>
+                        <NavLink to="orders" className="NavLink">Orders</NavLink>
+                    </NavItem>
+                    <NavItem>
                         <NavLink to="/cartadvanced" className="NavLink Cart"><button style={{ marginTop: '-5px' }} type="button" className="p-0 btn position-relative">
                             <img width='45px' height='45px' src={CartIcon} alt="Cart" />
                             <span style={{ backgroundColor: "white", color: "#D70F64" }} className="position-absolute top-0 start-100 translate-middle badge rounded-pill">

@@ -9,6 +9,7 @@ import { CartProvider } from "react-use-cart";
 import { Route, Routes } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import Checkout from "./Orders/Checkout";
+import Orders from "./Orders/Orders";
 
 
 const Main = props => {
@@ -22,6 +23,7 @@ const Main = props => {
                         <Route path='/cartadvanced' element={<CartAdvanced />} />
                         <Route path='/cart' element={<Cart />} />
                         <Route path="/checkout" element={<Checkout />} />
+                        <Route path="/orders" element={<Orders />} />
                     </Routes>
                 </SnackbarProvider>
             </CartProvider>
