@@ -42,7 +42,6 @@ const ItemCard = (props) => {
             <Modal
                 isOpen={modal} toggle={toggleModal} size='lg' centered scrollable
             >
-
                 <ModalBody>
                     <div className="row container my-2 justify-content-center">
                         <div className="col" style={{ alignItems: 'center' }} width='50%' height="100%">

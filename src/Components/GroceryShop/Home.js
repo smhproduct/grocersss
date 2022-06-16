@@ -5,7 +5,7 @@ import Top from './Top';
 import { SnackbarProvider } from 'notistack';
 import './Home.css';
 import { useState } from "react";
-import { Input } from 'reactstrap';
+import { Input, Alert } from 'reactstrap';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
@@ -35,6 +35,11 @@ const Home = () => {
     }
     return (
         <div>
+            <div className="container">
+                <Alert color="danger">
+                    Use Code: "KUTU131" to get TK 50 off on orders above TK 200!!
+                </Alert>
+            </div>
             <div className="templateContainer">
                 <div style={{}} className="searchInput_Container">
                     <Input style={{ color: 'black', border: '2px solid #D70F64', boxShadow: '0 5px 5px 0 rgba(0, 0, 0, 0.19)' }} className="box" id="searchInput" type="text" placeholder="Search food items, products..."

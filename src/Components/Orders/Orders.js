@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch, } from 'react-redux';
-
 import { loadOrders, orderLoadFailed } from '../../redux/grocersssSlice'
 import Spinner from '../Spinner/Spinner';
 import Order from './Order';
 import axios from 'axios';
+
 
 
 export const fetchOrders = () => dispatch => {
@@ -21,7 +21,7 @@ const Orders = () => {
     const data = useSelector((state) => {
         return state
     })
-    
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -51,13 +51,13 @@ const Orders = () => {
             }}>You Have No Orders</p>
 
         } else {
-            orders = data.orders.map(order => {
+            orders = data.orders.slice(0).reverse().map(order => {
                 return <Order order={order} key={order.id} />
             })
         }
     }
     return (
-        <div>
+        <div style={{ marginTop: '90px' }}>
             {data.orderLoading ? <Spinner /> : orders}
         </div>
     );
