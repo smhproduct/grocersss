@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
 
 const initialState = {
     orders: [],
@@ -35,18 +34,10 @@ export const grocersssSlice = createSlice({
             }
         },
 
-        fetchOrders: () => dispatch => {
-            axios.get('https://grocersss-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json')
-                .then(response => {
-                    dispatch(loadOrders(response.data));
-                })
-                .catch(err => {
-                    dispatch(orderLoadFailed());
-                })
-        }
+
     }
 });
 
-export const { loadOrders, orderLoadFailed, fetchOrders } = grocersssSlice.actions;
+export const { loadOrders, orderLoadFailed } = grocersssSlice.actions;
 
 export default grocersssSlice.reducer;

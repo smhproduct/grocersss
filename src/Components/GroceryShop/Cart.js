@@ -16,14 +16,11 @@ const Cart = () => {
         totalUniqueItems,
         items,
         totalItems,
-        cartTotal,
+        //cartTotal,
         updateItemQuantity,
         removeItem,
         emptyCart
     } = useCart();
-    const buy = () => {
-        alert("No Connection!");
-    };
 
     const { enqueueSnackbar } = useSnackbar();
     const handleClickVariant = (variant) => {

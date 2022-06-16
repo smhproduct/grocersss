@@ -3,26 +3,14 @@ import ItemCard from "./ItemCard";
 import data from "./../../data";
 import Top from './Top';
 import { SnackbarProvider } from 'notistack';
-import './../Header/Search2.css';
+import './Home.css';
 import { useState } from "react";
 import { Input } from 'reactstrap';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 
 const Home = () => {
-
-    let theme = createTheme({
-        palette: {
-            primary: {
-                main: '#d70f64',
-            },
-            secondary: {
-                main: '#d70f64',
-            },
-        },
-    });
 
     const [searchTerm, setSearchTerm] = useState("");//for search bar
 
@@ -45,73 +33,67 @@ const Home = () => {
 
         setItems(updatedItems)
     }
-
     return (
-        <ThemeProvider theme={theme}>
-            <div>
-                <div className="templateContainer">
-                    <div style={{}} className="searchInput_Container">
-                        <Input style={{ color: 'black', border: '2px solid #D70F64', boxShadow: '0 5px 5px 0 rgba(0, 0, 0, 0.19)' }} className="box" id="searchInput" type="text" placeholder="Search food items, products..."
-                            onChange={(event) => {
-                                setSearchTerm(event.target.value);
-                            }} />
-                    </div>
+        <div>
+            <div className="templateContainer">
+                <div style={{}} className="searchInput_Container">
+                    <Input style={{ color: 'black', border: '2px solid #D70F64', boxShadow: '0 5px 5px 0 rgba(0, 0, 0, 0.19)' }} className="box" id="searchInput" type="text" placeholder="Search food items, products..."
+                        onChange={(event) => {
+                            setSearchTerm(event.target.value);
+                        }} />
                 </div>
-
-
-
-                <section className="container-fluid">
-                    <div className="row justify-content-center">
-                        <div className="row justify-content-center mt-2 mb-3">
-                            <Box sx={{ maxWidth: { xs: 320, sm: 480, md: 800 }, bgcolor: 'background.paper' }}>
-                                <Tabs
-                                    value={value}
-                                    onChange={handleChange}
-                                    variant="scrollable"
-                                    scrollButtons="auto"
-                                    textColor="primary"
-                                    indicatorColor="primary"
-                                    aria-label="scrollable primary auto tabs example"
-                                >
-                                    <Tab label="All" onClick={() => setItems(data.productData)} />
-                                    {uniqueCategories.map((category) =>
-                                        (<Tab key={category} label={category} onClick={() => filterItem(category)} />)
-                                    )}
-                                </Tabs>
-                            </Box>
-                        </div>
-                        {
-                            items.filter((val) => {
-                                if (searchTerm === "") {
-                                    return val;
-                                } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
-                                    return val;
-                                }
-                            })
-                                .map((val) => {
-                                    return (
-                                        <div className="col-xl-2 m-xl-2 col-md-3 col-sm-4 m-1" key={Math.random()}>
-                                            <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
-                                                <ItemCard
-                                                    img={val.img}
-                                                    price={val.price}
-                                                    title={val.title}
-                                                    item={val}
-                                                    desc={val.desc}
-                                                    category={val.category}
-                                                    key={Math.random()}
-                                                />
-                                            </SnackbarProvider>
-                                        </div>
-                                    )
-                                })
-                        }
-                    </div>
-                    <Top />
-                </section>
-
             </div>
-        </ThemeProvider>
+            <section className="container-fluid">
+                <div className="row justify-content-center">
+                    <div className="row justify-content-center mt-2 mb-3">
+                        <Box sx={{ maxWidth: { xs: 320, sm: 480, md: 800 }, bgcolor: 'background.paper' }}>
+                            <Tabs
+                                value={value}
+                                onChange={handleChange}
+                                variant="scrollable"
+                                scrollButtons="auto"
+                                textColor="primary"
+                                indicatorColor="primary"
+                                aria-label="scrollable primary auto tabs example"
+                            >
+                                <Tab label="All" onClick={() => setItems(data.productData)} />
+                                {uniqueCategories.map((category) =>
+                                    (<Tab key={category} label={category} onClick={() => filterItem(category)} />)
+                                )}
+                            </Tabs>
+                        </Box>
+                    </div>
+                    {
+                        items.filter((val) => {
+                            if (searchTerm === "") {
+                                return val;
+                            } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
+                                return val;
+                            } return 0;
+                        })
+                            .map((val) => {
+                                return (
+                                    <div className="col-xl-2 m-xl-2 col-md-3 col-sm-4 m-1" key={Math.random()}>
+                                        <SnackbarProvider maxSnack={3} autoHideDuration={2000}>
+                                            <ItemCard
+                                                img={val.img}
+                                                price={val.price}
+                                                title={val.title}
+                                                item={val}
+                                                desc={val.desc}
+                                                category={val.category}
+                                                key={Math.random()}
+                                            />
+                                        </SnackbarProvider>
+                                    </div>
+                                )
+                            })
+                    }
+                </div>
+                <Top />
+            </section>
+
+        </div>
     );
 };
 export default Home;

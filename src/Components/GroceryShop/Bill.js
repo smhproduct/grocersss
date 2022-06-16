@@ -12,7 +12,7 @@ const Bill = () => {
         alert("No Connection!");
     };*/
     return (
-        <div>
+        <div className='container-fluid'>
             <div>
                 <h5 style={{ textAlign: 'center', padding: '20px 20px 15px 20px' }}>Your Bill at GROCERSSS</h5>
             </div>

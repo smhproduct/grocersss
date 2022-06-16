@@ -21,13 +21,7 @@ const Orders = () => {
     const data = useSelector((state) => {
         return state
     })
-    /* const orderErr = useSelector((state) => {
-        return state.orderErr
-    })
-    const orderLoading = useSelector((state) => {
-        return state.orderLoading
-    }) */
-
+    
     const dispatch = useDispatch();
 
     useEffect(() => {

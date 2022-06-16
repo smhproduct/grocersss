@@ -27,12 +27,12 @@ const ItemCard = (props) => {
         <div>
             <div className="card mb-3 shadow" style={{ width: "100%", height: '280px', borderRadius: '10%', alignItems: 'center', padding: '10px', cursor: 'pointer' }}>
                 <img onClick={toggleModal} className="card-img-top img-fluid" style={{ height: "50%", width: '70%', }} src={props.img} alt={props.title} />
-                <div className="card-body text-center">
-                    <div style={{}} className="card-title">{props.title}</div>
+                <div className="card-body">
+                    <div style={{ fontSize: '15px' }} className="card-title">{props.title}</div>
                 </div>
-                <div style={{ overflow: 'hidden', width: '100%' }} className="card-footer row">
-                    <p style={{ fontSize: 'medium', paddingTop: '5px', fontWeight: 'bold' }} className="card-text col">BDT {props.price}
-                        <IconButton style={{ float: 'right', marginTop: '-8px' }} color="primary" aria-label="add to shopping cart" onClick={() => addItemHandler(props)}>
+                <div style={{ overflowY: 'hidden', width: '100%', height: '50px' }} className="card-footer row">
+                    <p style={{ fontSize: '14px', paddingTop: '5px', fontWeight: 'bold' }} className="card-text col">BDT {props.price}
+                        <IconButton style={{ float: 'right', marginTop: '-8px', }} color="primary" aria-label="add to shopping cart" onClick={() => addItemHandler(props)}>
                             <AddShoppingCartIcon style={{ color: "#D70F64" }} />
                         </IconButton>
                     </p>

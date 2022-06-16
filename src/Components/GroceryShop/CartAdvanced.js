@@ -12,11 +12,7 @@ const CartAdvanced = () => {
 
     return (
         <div className="container-fluid" style={{ marginTop: '85px' }}>
-            <Row
-                lg="2"
-
-                xs="1"
-            >
+            <Row lg="2" xs="1">
                 <div className=" container-fluid col-md- col-lg-9">
                     <Cart />
                 </div>

@@ -7,17 +7,22 @@ import axios from 'axios';
 import Spinner from '../Spinner/Spinner';
 import { Formik } from 'formik';
 import { TextField } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
+import Box from '@mui/material/Box';
+import PaymentIcon from '@mui/icons-material/Payment';
+import CallIcon from '@mui/icons-material/Call';
 
 const Checkout = () => {
 
     const {
-        isEmpty,
-        totalUniqueItems,
+        //isEmpty,
+        //totalUniqueItems,
         items,
         totalItems,
         cartTotal,
-        updateItemQuantity,
-        removeItem,
+        //updateItemQuantity,
+        //removeItem,
         emptyCart
     } = useCart();
 
@@ -92,145 +97,166 @@ const Checkout = () => {
 
     let form = (
         <div className='container'>
-            <h4 style={
+            <div className=" mb-3 shadow" style={
                 {
                     border: '1px solid #d70f64',
                     boxShadow: '2px 2px #d70f64',
                     borderRadius: '5px',
                     padding: '20px',
                 }
-            }>Payment: BDT {cartTotal}</h4>
-            <Table style={{ marginTop: '30px' }} borderless>
-                <tbody>
-                    <tr>
-                        <td>
-                            <h6>Subtotal</h6>
-                        </td>
-                        <td allign="right">
-                            <h6>Tk {cartTotal} </h6>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6>VAT</h6>
-                        </td>
-                        <td allign="right">
-                            <h6>Tk {parseFloat(cartTotal * 0.15).toFixed(2)} </h6>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6>Delivery Charge</h6>
-                        </td>
-                        <td allign="right">
-                            <h6>Tk 50 </h6>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h6 style={{ color: 'red' }}>Voucher</h6>
-                        </td>
-                        <td allign="right">
-                            <h6 style={{ color: 'red' }}>Tk0 </h6>
-                        </td>
-                    </tr>
-                    <tr style={{ borderTop: '1px solid black' }}>
-                        <td>
-                            <h6>Total(incl. VAT)</h6>
-                        </td>
-                        <td allign="right">
-                            <h6>Tk {parseFloat(cartTotal + 50 + cartTotal * 0.15).toFixed(2)} </h6>
-                        </td>
-                    </tr>
-                </tbody>
-            </Table><br />
+            }>
+                <h5 style={{ padding: '10px' }}>Payment: BDT {cartTotal}</h5>
+                <hr />
 
-            <h4 style={
+                <Table style={{ marginTop: '30px' }} borderless>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h6>Subtotal</h6>
+                            </td>
+                            <td allign="right">
+                                <h6>Tk {cartTotal} </h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6>VAT</h6>
+                            </td>
+                            <td allign="right">
+                                <h6>Tk {parseFloat(cartTotal * 0.15).toFixed(2)} </h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6>Delivery Charge</h6>
+                            </td>
+                            <td allign="right">
+                                <h6>Tk 50 </h6>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h6 style={{ color: 'red' }}>Voucher</h6>
+                            </td>
+                            <td allign="right">
+                                <h6 style={{ color: 'red' }}>Tk0 </h6>
+                            </td>
+                        </tr>
+                        <tr style={{ borderTop: '1px solid black' }}>
+                            <td>
+                                <h6>Total(incl. VAT)</h6>
+                            </td>
+                            <td allign="right">
+                                <h6>Tk {parseFloat(cartTotal + 50 + cartTotal * 0.15).toFixed(2)} </h6>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table></div><br />
+            <div className=" mb-3 shadow" style={
                 {
                     border: '1px solid #d70f64',
                     boxShadow: '2px 2px #d70f64',
                     borderRadius: '5px',
                     padding: '20px',
                 }
-            }>Your Information: </h4>
-            <Formik
-                initialValues={{
-                    deliveryAddress: "",
-                    phone: "",
-                    paymentType: "Cash On Delivery",
-                }}
-                validate={values => {
-                    const errors = {};
-                    if (!values.deliveryAddress) {
-                        errors.deliveryAddress = 'Required';
-                        setState({
-                            disablePlaceOrder: true
-                        });
-                        return errors;
-                    }
-                    if (!values.phone) {
-                        errors.phone = 'Required';
-                        setState({
-                            disablePlaceOrder: true
-                        });
-                        return errors;
-
-                    } else if (!/^(\+)?(88)?01[0-9]{9}$/i.test(values.phone)) {
-                        errors.phone = "Invalid Phone Number";
-                        setState({
-                            disablePlaceOrder: true
-                        });
-                        return errors;
-                    } else setState({ disablePlaceOrder: false })
-                    return errors;
-                }}
-                onSubmit={(values) => {
-                    console.log(values);
-                    submitHandler(values);
-                }}
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-
-                }) => (
-                    <form style={
-                        {
-                            border: '2px solid #d70f64',
-                            borderRadius: '5px',
-                            padding: '20px',
+            }>
+                <h5 style={{ padding: '10px' }}>Your Information: </h5>
+                <hr />
+                <Formik
+                    initialValues={{
+                        deliveryAddress: "",
+                        phone: "",
+                        paymentType: "Cash On Delivery",
+                    }}
+                    validate={values => {
+                        const errors = {};
+                        if (!values.deliveryAddress) {
+                            errors.deliveryAddress = 'Required';
+                            setState({
+                                disablePlaceOrder: true
+                            });
+                            return errors;
                         }
-                    } onSubmit={handleSubmit}>
-                        <textarea
-                            name='deliveryAddress'
-                            id="deliveryAddress"
-                            className="form-control"
-                            value={values.deliveryAddress}
-                            placeholder='Your address'
-                            onChange={handleChange} >
-                        </textarea>
-                        <span style={{ color: 'red' }}>{errors.deliveryAddress}</span><br />
-                        <input name="phone" id='phone' className='form-control' value={values.phone} placeholder='Your Phone Number' onChange={handleChange} onBlur={handleBlur} />
-                        <span style={{ color: 'red' }}>{errors.phone}</span>
-                        <br />
-                        {/* <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                       */}  <select name='paymentType' id='paymentType' className='form-control' value={values.paymentType} onBlur={handleBlur} onChange={handleChange} >
-                            <option value="Cash On Delivery">Cash On Delivery</option>
-                            <option value="Bkash">Bkash</option>
-                        </select>
-                        <br />
-                        <Button type='submit' style={{ backgroundColor: '#d70f64' }} className="mr-auto" disabled={disablePlaceOrder}  >Place Order</Button>
-                        <Link to={'/'}>
-                            <Button color='secondary' className='mx-1'>Cancel</Button>
-                        </Link>
+                        if (!values.phone) {
+                            errors.phone = 'Required';
+                            setState({
+                                disablePlaceOrder: true
+                            });
+                            return errors;
 
-                    </form>)}
-            </Formik>
-        </div>
+                        } else if (!/^(\+)?(88)?01[0-9]{9}$/i.test(values.phone)) {
+                            errors.phone = "Invalid Phone Number";
+                            setState({
+                                disablePlaceOrder: true
+                            });
+                            return errors;
+                        } else setState({ disablePlaceOrder: false })
+                        return errors;
+                    }}
+                    onSubmit={(values) => {
+                        console.log(values);
+                        submitHandler(values);
+                    }}
+                >
+                    {({
+                        values,
+                        errors,
+                        handleChange,
+                        handleSubmit,
+
+                    }) => (
+                        <form style={
+                            {
+                                borderRadius: '5px',
+                                padding: '20px',
+                                marginTop: '-40px'
+                            }
+                        } onSubmit={handleSubmit}>
+
+                            {<Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                                <LocationOnIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
+                                <TextField name="deliveryAddress" id="deliveryAddress" margin='normal' className="form-control" value={values.deliveryAddress} label="Your address" variant="standard" onChange={handleChange} />  </Box>}
+
+                            <span style={{ color: 'red' }}>{errors.deliveryAddress}</span>
+
+                            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                                <CallIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
+                                <TextField name="phone" id="phone" margin='normal' className="form-control" value={values.phone} label="Your phone no." onChange={handleChange} variant="standard" />  </Box>
+
+                            <span style={{ color: 'red' }}>{errors.phone}</span>
+
+                            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                                <PaymentIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
+                                <TextField style={{ width: "100%" }}
+                                    id="paymentType"
+                                    name='paymentType'
+                                    margin='normal'
+                                    variant='standard'
+                                    select
+                                    label="Payment Type"
+                                    value={values.paymentType}
+                                    onChange={handleChange}
+                                    placeholder='Payment Type'
+                                >
+                                    <MenuItem key="Cash On Delivery" value='Cash On Delivery'>
+                                        Cash On Delivery
+                                    </MenuItem>
+                                    <MenuItem key="Bkash" value='Bkash'>
+                                        Bkash
+                                    </MenuItem>
+                                </TextField>
+                            </Box>
+                            <br />
+
+                            <Button type='submit' style={{ backgroundColor: '#d70f64' }} className="mr-auto" disabled={disablePlaceOrder}  >Place Order</Button>
+                            <Link to={'/'}>
+                                <Button color='secondary' className='mx-1'>Cancel</Button>
+                            </Link>
+
+                        </form>)}
+                </Formik>
+            </div>
+        </div >
     )
     return (
         <div style={{ marginTop: '100px', marginBottom: '50px' }}>

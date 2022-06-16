@@ -20,28 +20,22 @@
     text-decoration: none;
     color: white !important;
     font-size: 20px;
-    margin-top: -25px;
-    margin-right: 20px;
-
+    margin-right: 8px;
+    padding: 6px;
+    opacity: 0.95;
 }
 
 .NavLink:hover {
-    color: wheat !important;
+    color: white !important;
     text-decoration: none;
-
+    border-bottom: 1px solid white;
 }
 
-.Cart {
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 30%;
-}
 
-.Cart:hover {
-    background-color: grey;
-}
 
-/*.active {
+.active {
     text-shadow: 1px 1px grey !important;
-    color: wheat !important;
-}*/
+    color: white !important;
+    border-bottom: 3px solid white;
+    opacity: 1;
+}
