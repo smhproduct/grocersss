@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Modal, ModalBody } from 'reactstrap';
 import { Table } from 'reactstrap';
 import { useCart } from "react-use-cart";
@@ -12,6 +12,8 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import Box from '@mui/material/Box';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CallIcon from '@mui/icons-material/Call';
+import { useSelector, useDispatch, } from 'react-redux';
+import { resetVoucher } from '../../redux/grocersssSlice';
 
 const Checkout = () => {
     const {
@@ -25,12 +27,17 @@ const Checkout = () => {
         emptyCart
     } = useCart();
 
+    const data = useSelector((state) => {
+        return state
+    })
+    const dispatch = useDispatch();
+
     const [state, setState] = useState({
-        values: {
+        /* values: {
             deliveryAddress: "",
             phone: "",
             paymentType: "Cash On Delivery"
-        },
+        }, */
         isLoading: false,
         isModalOpen: false,
         modalMsg: '',
@@ -41,6 +48,8 @@ const Checkout = () => {
     const isModalOpen = state.isModalOpen;
     const modalMsg = state.modalMsg;
     const disablePlaceOrder = state.disablePlaceOrder;
+
+    let navigate = useNavigate();
 
     const submitHandler = (values) => {
         setState(prevState => {
@@ -54,7 +63,9 @@ const Checkout = () => {
             items: items,
             totalItems: totalItems,
             customer: values,
-            price: parseFloat(cartTotal + 50 + cartTotal * 0.15).toFixed(2),
+            price: parseFloat(cartTotal + 50 + cartTotal * 0.15 - data.voucherAmount).toFixed(2),
+            voucherName: data.voucherName,
+            voucherAmount: data.voucherAmount,
             orderTime: new Date()
         }
         console.log(order);
@@ -71,6 +82,7 @@ const Checkout = () => {
                         }
                     })
                     emptyCart();
+                    dispatch(resetVoucher());
                 } else {
                     setState(prevState => {
                         return {
@@ -111,7 +123,7 @@ const Checkout = () => {
                     <tbody>
                         <tr>
                             <td>
-                                <h6>Subtotal</h6>
+                                <h6>Order Total</h6>
                             </td>
                             <td allign="right">
                                 <h6>Tk {cartTotal} </h6>
@@ -138,7 +150,7 @@ const Checkout = () => {
                                 <h6 style={{ color: 'red' }}>Voucher</h6>
                             </td>
                             <td allign="right">
-                                <h6 style={{ color: 'red' }}>Tk0 </h6>
+                                <h6 style={{ color: 'red' }}>(Tk {data.voucherAmount}) {data.voucherName}  </h6>
                             </td>
                         </tr>
                         <tr style={{ borderTop: '1px solid black' }}>
@@ -146,7 +158,7 @@ const Checkout = () => {
                                 <h6>Total(incl. VAT)</h6>
                             </td>
                             <td allign="right">
-                                <h6>Tk {parseFloat(cartTotal + 50 + cartTotal * 0.15).toFixed(2)} </h6>
+                                <h6>Tk {parseFloat(cartTotal + 50 + cartTotal * 0.15 - data.voucherAmount).toFixed(2)} </h6>
                             </td>
                         </tr>
                     </tbody>
@@ -262,9 +274,7 @@ const Checkout = () => {
             {isLoading ? <Spinner /> : form}
 
             <Modal isOpen={isModalOpen}>
-                <Link to={'/'}>
-                    <ModalBody><p>{modalMsg}</p></ModalBody>
-                </Link>
+                <ModalBody onClick={() => navigate('/')}><p>{modalMsg}</p></ModalBody>
             </Modal>
         </div>
     );

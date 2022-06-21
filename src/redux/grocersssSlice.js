@@ -3,7 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     orders: [],
     orderLoading: true,
-    orderErr: false
+    orderErr: false,
+    voucherName: '',
+    voucherAmount: 0
+
 }
 
 export const grocersssSlice = createSlice({
@@ -34,10 +37,28 @@ export const grocersssSlice = createSlice({
             }
         },
 
+        addVoucher: (state, action) => {
+            console.log(action.payload.voucherAmount);
+            return {
+                ...state,
+                voucherName: action.payload.voucher,
+                voucherAmount: action.payload.voucherAmount,
+            }
+
+        },
+
+        resetVoucher: (state) => {
+            return {
+                ...state,
+                voucherName: '',
+                voucherAmount: 0
+            }
+        }
+
 
     }
 });
 
-export const { loadOrders, orderLoadFailed } = grocersssSlice.actions;
+export const { loadOrders, orderLoadFailed, addVoucher, resetVoucher } = grocersssSlice.actions;
 
 export default grocersssSlice.reducer;

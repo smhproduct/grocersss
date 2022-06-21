@@ -25,7 +25,7 @@ const Orders = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchOrders());
+        dispatch(fetchOrders())
     }, []);
 
 

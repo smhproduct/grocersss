@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { Card, Badge, CardBody, Button, CardTitle, CardText, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Card, Badge, CardBody, Button, CardTitle, CardText, Modal, ModalHeader, ModalBody } from 'reactstrap';
 
 const Order = props => {
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
+
+
     const itemSummary = props.order.items?.map(item => {
         return (
             <li style={{
@@ -29,7 +31,7 @@ const Order = props => {
                     <CardText
                         className="mb-2"
                     >
-                        <div>Date: {new Date(props.order.orderTime).toUTCString()}</div>
+                        <div>Date: {new Date(props.order.orderTime).toString()}</div>
 
                         <div>Delivery Address: {props.order.customer.deliveryAddress}</div>
 
@@ -77,6 +79,10 @@ const Order = props => {
 
 
                         <div>
+                            Voucher: {props.order.voucherAmount}Tk ({props.order.voucherName})
+                        </div>
+
+                        <div>
                             Delivery Address:  {props.order.customer.deliveryAddress}
                         </div>
 
@@ -85,7 +91,7 @@ const Order = props => {
                         </div>
 
                         <div>
-                            Date: {new Date(props.order.orderTime).toUTCString()}
+                            Date: {new Date(props.order.orderTime).toString()}
                         </div>
                         <hr />
                         <div className='row'>

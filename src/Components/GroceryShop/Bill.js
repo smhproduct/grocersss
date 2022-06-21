@@ -1,16 +1,51 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Table } from 'reactstrap';
 import { useCart } from "react-use-cart";
 import { Link } from 'react-router-dom';
+import { ModalBody, Modal, Button } from "reactstrap";
+import Box from '@mui/material/Box';
+import { TextField } from '@mui/material';
+import { useSelector, useDispatch } from 'react-redux';
+import { addVoucher, resetVoucher } from '../../redux/grocersssSlice';
 
 const Bill = () => {
     const {
         cartTotal
     } = useCart();
 
-    /*const buy = () => {
-        alert("No Connection!");
-    };*/
+    const data = useSelector((state) => {
+        return state
+    })
+    const dispatch = useDispatch();
+
+
+    const [voucher, setVoucher] = useState("");
+    const [error, setError] = useState(false);
+    const [errMsg, setErrMsg] = useState("");
+
+    const handleVoucherSubmit = (e) => {
+        e.preventDefault();
+
+        if (voucher !== "KUTU131") {
+            setError(true)
+            setErrMsg("Invalid Voucher!")
+        } else {
+            if (cartTotal < 200) {
+                setError(true)
+                setErrMsg("Minimum order amount (Tk 200) not reached!")
+            } else {
+                dispatch(addVoucher({ voucher, voucherAmount: 50 }))
+                setError(false);
+                toggleModal();
+            }
+
+        }
+    }
+
+    const [modal, setModal] = useState(false);
+    const toggleModal = () => setModal(!modal);
+
+
     return (
         <div className='container-fluid'>
             <div>
@@ -47,13 +82,14 @@ const Bill = () => {
                                 <h6>Tk 50 </h6>
                             </td>
                         </tr>
-                        <tr>
+                        <tr style={{ color: '#d70f64' }}>
 
                             <td>
                                 <h6>Voucher</h6>
                             </td>
                             <td allign="right">
-                                <h6>Tk0 </h6>
+                                <h6>(Tk {data.voucherAmount}) {data.voucherName} </h6>
+                                {data.voucherAmount !== 0 ? <span style={{ cursor: 'pointer' }} onClick={() => dispatch(resetVoucher())}>Remove</span> : ""}
                             </td>
                         </tr>
                         <tr style={{ borderTop: '1px solid grey' }}>
@@ -62,12 +98,75 @@ const Bill = () => {
                                 <h6>Total(incl. VAT)</h6>
                             </td>
                             <td allign="right">
-                                <h6>Tk {parseFloat(cartTotal + 50 + cartTotal * 0.15).toFixed(2)} </h6>
+                                <h6>Tk {parseFloat(cartTotal + 50 + cartTotal * 0.15 - data.voucherAmount).toFixed(2)} </h6>
                             </td>
                         </tr>
                     </tbody>
                 </Table>
             </div>
+            <div>
+                <a style={{ color: "#D70F64", cursor: 'pointer' }} onClick={toggleModal} >
+                    Do you want to use voucher?
+                </a>
+            </div>
+            <br />
+
+            <Modal isOpen={modal} toggle={toggleModal}>
+                <ModalBody>
+                    {/* <Formik
+                        initialValues={{
+                            voucher: "",
+                        }}
+                        validate={values => {
+                            const errors = {};
+                            if (!values.voucher) {
+                                errors.voucher = 'Required';
+                                setState({
+                                    : true
+                                });
+                                return errors;
+
+                            } else if (!/^[KUTU131]$/i.test(values.voucher)) {
+                                errors.voucher = "Invalid voucher Number";
+                                setState({
+                                    : true
+                                });
+                                return errors;
+                            } else setState({ : false })
+                            return errors;
+                        }}>
+                        {({
+                            values,
+                            errors,
+                            handleChange,
+                            handleSubmit,
+
+                        }) => ( */}
+                    <form style={
+                        {
+                            borderRadius: '5px',
+                            padding: '20px',
+                            marginTop: '-40px'
+                        }
+                    } onSubmit={handleVoucherSubmit}>
+
+                        <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                            <TextField name="voucher" id="voucher" margin='normal' className="form-control" label="Use Voucher" variant="standard" onChange={e => setVoucher(e.target.value)} />
+                        </Box>
+
+                        {error ? <label style={{ color: 'red' }}>{errMsg}</label> : ""}
+                        <br />
+
+                        <Button style={{ backgroundColor: '#d70f64' }} className="mr-auto" >Apply Voucher</Button>
+
+                        <Button color='secondary' className='mx-1' onClick={toggleModal}>Cancel</Button>
+
+
+                    </form>{/* )}
+                    </Formik> */}
+                </ModalBody>
+            </Modal>
+
             <div>
                 <Link to={'/checkout'}>
                     <button style={{ backgroundColor: "#D70F64", color: "white" }} className="btn ms-2">
@@ -78,5 +177,4 @@ const Bill = () => {
         </div>
     );
 };
-
 export default Bill;
