@@ -26,7 +26,7 @@ const Orders = () => {
 
     useEffect(() => {
         dispatch(fetchOrders())
-    }, []);
+    }, [dispatch]);
 
 
     let orders = null;
@@ -57,6 +57,7 @@ const Orders = () => {
             })
         }
     }
+    document.title = "Orders | GROCERSSS";
     return (
         <div style={{ marginTop: '90px' }}>
             {data.orderLoading ? <Spinner /> : orders}

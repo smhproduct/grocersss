@@ -105,9 +105,9 @@ const Bill = () => {
                 </Table>
             </div>
             <div>
-                <a style={{ color: "#D70F64", cursor: 'pointer' }} onClick={toggleModal} >
+                <p style={{ color: "#D70F64", cursor: 'pointer' }} onClick={toggleModal} >
                     Do you want to use voucher?
-                </a>
+                </p>
             </div>
             <br />
 

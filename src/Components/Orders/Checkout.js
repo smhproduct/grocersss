@@ -269,6 +269,7 @@ const Checkout = () => {
             </div>
         </div >
     )
+    document.title = "Checkout | GROCERSSS"
     return (
         <div style={{ marginTop: '100px', marginBottom: '50px' }}>
             {isLoading ? <Spinner /> : form}

@@ -10,6 +10,8 @@ const CartAdvanced = () => {
         cartTotal
     } = useCart();
 
+    document.title = "Your Cart | GROCERSSS"
+
     return (
         <div className="container-fluid" style={{ marginTop: '85px' }}>
             <Row lg="2" xs="1">

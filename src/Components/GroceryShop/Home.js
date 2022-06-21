@@ -33,6 +33,7 @@ const Home = () => {
 
         setItems(updatedItems)
     }
+    document.title = "Home | GROCERSSS"
     return (
         <div>
             <div className="container">
