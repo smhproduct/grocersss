@@ -14,7 +14,6 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import CallIcon from '@mui/icons-material/Call';
 
 const Checkout = () => {
-
     const {
         //isEmpty,
         //totalUniqueItems,
@@ -60,7 +59,7 @@ const Checkout = () => {
         }
         console.log(order);
 
-        axios.post("https://grocersss-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json", order)
+        axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json", order)
             .then(response => {
                 if (response.status === 200) {
                     setState(prevState => {

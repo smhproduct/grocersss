@@ -9,9 +9,10 @@ import { Route, Routes } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import Checkout from "./Orders/Checkout";
 import Orders from "./Orders/Orders";
-
+import { fetchOrders } from "./Orders/Orders";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 
 const Main = () => {
     let theme = createTheme({
@@ -21,6 +22,13 @@ const Main = () => {
             },
         },
     });
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchOrders())
+    })
+
     return (
         <div>
             <ThemeProvider theme={theme}>

@@ -4,7 +4,7 @@ import { Card, Badge, CardBody, Button, CardTitle, CardText, Modal, ModalHeader,
 const Order = props => {
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
-    const itemSummary = props.order.items.map(item => {
+    const itemSummary = props.order.items?.map(item => {
         return (
             <li style={{
                 padding: '5px',
@@ -105,79 +105,4 @@ const Order = props => {
 };
 
 
-
-
-
-
-
-
-/* <div style={{
-
-                    boxShadow: 'rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px',
-                    borderRadius: '5px',
-                    padding: '20px',
-                    marginBottom: '20px',
-
-                }}>
-                    <p>Order ID: {props.order.id}</p>
-                    <p>Delivery Address: {props.order.customer.deliveryAddress}</p>
-                    <p>Payment Type: {props.order.customer.paymentType}</p>
-                    <hr />
-                    <p>Total: BDT  {props.order.price} </p>
-                    <hr />
-                    <p>Date: {new Date(props.order.orderTime).toString()}</p>
-                    <hr />
-                    <p>Total Items: {props.order.totalItems}</p>
-                    <hr />
-
-
-                </div> */
-
-
-
-
-/* <div className='container'>
-
-            <div className='row'>
-                <div className='col-10'>
-                    <p>Order ID: {props.order.id}</p>
-                </div>
-                <div className='col-2'>
-                    <p style={color:pink}>Completed</p>
-                </div>
-                <h1> </h1>
-            </div>
-
-            <div>
-
-            </div>
-            <div>
-
-    </div>*/
-
-
-
 export default Order;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

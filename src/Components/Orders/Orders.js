@@ -8,7 +8,7 @@ import axios from 'axios';
 
 
 export const fetchOrders = () => dispatch => {
-    axios.get('https://grocersss-default-rtdb.asia-southeast1.firebasedatabase.app/orders.json')
+    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json')
         .then(response => {
             dispatch(loadOrders(response.data));
         })
@@ -25,10 +25,10 @@ const Orders = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchOrders())
-    }
+        dispatch(fetchOrders());
+    }, []);
 
-    )
+
     let orders = null;
     if (data.orderErr) {
         orders = <p style={{
@@ -36,7 +36,8 @@ const Orders = () => {
             boxShadow: '1px 1px #888888',
             borderRadius: '5px',
             padding: '20px',
-            marginBottom: '10px'
+            marginBottom: '10px',
+            widht: '80%'
 
         }}>Sorry Failed to Load Orders</p>
     } else {
