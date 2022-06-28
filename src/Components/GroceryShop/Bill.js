@@ -25,8 +25,8 @@ const Bill = () => {
 
     const handleVoucherSubmit = (e) => {
         e.preventDefault();
-
-        if (voucher !== "KUTU131") {
+        console.log(voucher);
+        if (voucher.toString().toUpperCase === "HAPPY50") {
             setError(true)
             setErrMsg("Invalid Voucher!")
         } else {
@@ -88,7 +88,7 @@ const Bill = () => {
                                 <h6>Voucher</h6>
                             </td>
                             <td allign="right">
-                                <h6>(Tk {data.voucherAmount}) {data.voucherName} </h6>
+                                <h6>(Tk {data.voucherAmount}) HAPPY50 </h6>
                                 {data.voucherAmount !== 0 ? <span style={{ cursor: 'pointer' }} onClick={() => dispatch(resetVoucher())}>Remove</span> : ""}
                             </td>
                         </tr>
@@ -113,35 +113,7 @@ const Bill = () => {
 
             <Modal isOpen={modal} toggle={toggleModal}>
                 <ModalBody>
-                    {/* <Formik
-                        initialValues={{
-                            voucher: "",
-                        }}
-                        validate={values => {
-                            const errors = {};
-                            if (!values.voucher) {
-                                errors.voucher = 'Required';
-                                setState({
-                                    : true
-                                });
-                                return errors;
 
-                            } else if (!/^[KUTU131]$/i.test(values.voucher)) {
-                                errors.voucher = "Invalid voucher Number";
-                                setState({
-                                    : true
-                                });
-                                return errors;
-                            } else setState({ : false })
-                            return errors;
-                        }}>
-                        {({
-                            values,
-                            errors,
-                            handleChange,
-                            handleSubmit,
-
-                        }) => ( */}
                     <form style={
                         {
                             borderRadius: '5px',
@@ -162,8 +134,7 @@ const Bill = () => {
                         <Button color='secondary' className='mx-1' onClick={toggleModal}>Cancel</Button>
 
 
-                    </form>{/* )}
-                    </Formik> */}
+                    </form>
                 </ModalBody>
             </Modal>
 

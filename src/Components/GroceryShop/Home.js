@@ -38,7 +38,7 @@ const Home = () => {
         <div>
             <div className="container">
                 <Alert color="danger">
-                    Use Code: "KUTU131" to get TK 50 off on orders above TK 200!!
+                    Use Code: "HAPPY50" to get TK 50 off on orders above TK 200!!
                 </Alert>
             </div>
             <div className="templateContainer">
