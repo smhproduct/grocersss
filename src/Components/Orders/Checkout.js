@@ -150,7 +150,7 @@ const Checkout = () => {
                                 <h6 style={{ color: 'red' }}>Voucher</h6>
                             </td>
                             <td allign="right">
-                                <h6 style={{ color: 'red' }}>(Tk {data.voucherAmount}) HAPPY50  </h6>
+                                <h6 style={{ color: 'red' }}>(Tk {data.voucherAmount}) {data.voucherName}  </h6>
                             </td>
                         </tr>
                         <tr style={{ borderTop: '1px solid black' }}>

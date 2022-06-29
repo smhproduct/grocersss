@@ -26,7 +26,7 @@ const Bill = () => {
     const handleVoucherSubmit = (e) => {
         e.preventDefault();
         console.log(voucher);
-        if (voucher.toString().toUpperCase === "HAPPY50") {
+        if (voucher !== "HAPPY50") {
             setError(true)
             setErrMsg("Invalid Voucher!")
         } else {
@@ -60,7 +60,7 @@ const Bill = () => {
                             <td>
                                 <h6>Subtotal</h6>
                             </td>
-                            <td allign="right">
+                            <td align="right">
                                 <h6>Tk {cartTotal} </h6>
                             </td>
                         </tr>
@@ -69,7 +69,7 @@ const Bill = () => {
                             <td>
                                 <h6>VAT</h6>
                             </td>
-                            <td allign="right">
+                            <td align="right">
                                 <h6>Tk {parseFloat(cartTotal * 0.15).toFixed(2)} </h6>
                             </td>
                         </tr>
@@ -78,7 +78,7 @@ const Bill = () => {
                             <td>
                                 <h6>Delivery Charge</h6>
                             </td>
-                            <td allign="right">
+                            <td align="right">
                                 <h6>Tk 50 </h6>
                             </td>
                         </tr>
@@ -87,8 +87,8 @@ const Bill = () => {
                             <td>
                                 <h6>Voucher</h6>
                             </td>
-                            <td allign="right">
-                                <h6>(Tk {data.voucherAmount}) HAPPY50 </h6>
+                            <td align="right">
+                                <h6>(Tk {data.voucherAmount}) {data.voucherName} </h6>
                                 {data.voucherAmount !== 0 ? <span style={{ cursor: 'pointer' }} onClick={() => dispatch(resetVoucher())}>Remove</span> : ""}
                             </td>
                         </tr>
@@ -97,7 +97,7 @@ const Bill = () => {
                             <td>
                                 <h6>Total(incl. VAT)</h6>
                             </td>
-                            <td allign="right">
+                            <td align="right">
                                 <h6>Tk {parseFloat(cartTotal + 50 + cartTotal * 0.15 - data.voucherAmount).toFixed(2)} </h6>
                             </td>
                         </tr>

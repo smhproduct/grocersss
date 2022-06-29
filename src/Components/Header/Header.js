@@ -35,7 +35,7 @@ const Header = () => {
                 height: '70px'
             }}>
                 <NavbarBrand href="/" className=' ml-md-5 Brand'>
-                    <img src={Logo} alt="Logo" width='120px' height="78px" style={{ marginLeft: '-13px' }} />
+                    <img src={Logo} alt="Logo" width='100px' height="78px" style={{ marginLeft: '-13px' }} />
                 </NavbarBrand>
                 <Nav>
                     <NavItem>
