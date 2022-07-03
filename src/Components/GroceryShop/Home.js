@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ItemCard from "./ItemCard";
-import data from "./../../data";
+//import productData from "./../../data";
 import Top from './Top';
 import { SnackbarProvider } from 'notistack';
 import './Home.css';
@@ -9,14 +9,41 @@ import { Input, Alert } from 'reactstrap';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import axios from 'axios';
+import { useSelector, useDispatch, } from 'react-redux';
+import { loadProductData, productDataFailed } from '../../redux/grocersssSlice'
+import Spinner from '../Spinner/Spinner';
+
+
+
 
 const Home = () => {
+
+    const dispatch = useDispatch();
+    const data = useSelector((state) => {
+        return state
+    })
+    const [items, setItems] = useState(data.productData);//all data are kept here
 
     const [searchTerm, setSearchTerm] = useState("");//for search bar
 
     const [value, setValue] = React.useState(0);//for tab value
+    const fetchProductData = () => dispatch => {
 
-    const [items, setItems] = useState(data.productData);//all data are kept here
+        axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/productData.json')
+            .then(response => {
+                dispatch(loadProductData(response.data));
+            })
+            .catch(err => {
+                dispatch(productDataFailed());
+            })
+    }
+    useEffect(() => {
+        dispatch(fetchProductData());
+    }, [dispatch]);
+    useEffect(() => {
+        setItems(data.productData)
+    }, [data]);
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -33,9 +60,21 @@ const Home = () => {
 
         setItems(updatedItems)
     }
-    document.title = "Home | GROCERSSS"
-    return (
-        <div>
+    document.title = "Home | GROCERSSS";
+
+    let home = null;
+    if (data.productDataErr) {
+        home = <p style={{
+            border: '1px solid grey',
+            boxShadow: '1px 1px #888888',
+            borderRadius: '5px',
+            padding: '20px',
+            marginBottom: '10px',
+            widht: '80%'
+
+        }}>Sorry Failed to Load Items</p>
+    } else {
+        home = (<div>
             <div className="container">
                 <Alert color="danger">
                     Use Code: "HAPPY50" to get TK 50 off on orders above TK 200!!
@@ -49,7 +88,7 @@ const Home = () => {
                         }} />
                 </div>
             </div>
-            <section className="container-fluid">
+            <div className="container-fluid">
                 <div className="row justify-content-center">
                     <div className="row justify-content-center mt-2 mb-3">
                         <Box sx={{ maxWidth: { xs: 320, sm: 480, md: 800 }, bgcolor: 'background.paper' }}>
@@ -70,7 +109,7 @@ const Home = () => {
                         </Box>
                     </div>
                     {
-                        items.filter((val) => {
+                        items?.filter((val) => {
                             if (searchTerm === "") {
                                 return val;
                             } else if (val.title.toLowerCase().includes(searchTerm.toLowerCase())) {
@@ -97,8 +136,19 @@ const Home = () => {
                     }
                 </div>
                 <Top />
-            </section>
+            </div>
 
+        </div>)
+    }
+
+    /* !!Only to post product, will move it to admin later!!
+     productData.map(product => {
+        //console.log(product.title);
+        axios.post('https://grocersss-d8d44-default-rtdb.firebaseio.com/productData.json', product);
+    }) */
+    return (
+        <div /* style={{ marginTop: '90px' }} */>
+            {data.productDataLoading ? <Spinner /> : home}
         </div>
     );
 };

@@ -5,8 +5,6 @@ import Spinner from '../Spinner/Spinner';
 import Order from './Order';
 import axios from 'axios';
 
-
-
 export const fetchOrders = () => dispatch => {
     axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json')
         .then(response => {
@@ -25,7 +23,7 @@ const Orders = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchOrders())
+        dispatch(fetchOrders());
     }, [dispatch]);
 
 

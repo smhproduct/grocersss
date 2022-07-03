@@ -26,8 +26,8 @@ const Main = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchOrders())
-    })
+        dispatch(fetchOrders());
+    }, [dispatch]);
 
     return (
         <div>

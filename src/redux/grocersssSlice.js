@@ -4,8 +4,13 @@ const initialState = {
     orders: [],
     orderLoading: true,
     orderErr: false,
+
     voucherName: '',
-    voucherAmount: 0
+    voucherAmount: 0,
+
+    productData: [],
+    productDataLoading: true,
+    productDataErr: false,
 
 }
 
@@ -29,6 +34,8 @@ export const grocersssSlice = createSlice({
             }
         },
 
+
+
         orderLoadFailed: (state) => {
             return {
                 ...state,
@@ -37,6 +44,29 @@ export const grocersssSlice = createSlice({
             }
         },
 
+        loadProductData: (state, action) => {
+            let productData = [];
+            for (let key in action.payload) {
+                productData.push({
+                    ...action.payload[key],
+                    id: key
+                })
+            }
+            return {
+                ...state,
+                productData: productData,
+                productDataLoading: false,
+                productDataErr: false
+            }
+        },
+
+        productDataFailed: (state) => {
+            return {
+                ...state,
+                productDataErr: true,
+                productDataLoading: false
+            }
+        },
         addVoucher: (state, action) => {
             console.log(action.payload.voucherAmount);
             return {
@@ -59,6 +89,6 @@ export const grocersssSlice = createSlice({
     }
 });
 
-export const { loadOrders, orderLoadFailed, addVoucher, resetVoucher } = grocersssSlice.actions;
+export const { loadOrders, orderLoadFailed, addVoucher, resetVoucher, loadProductData, productDataFailed, } = grocersssSlice.actions;
 
 export default grocersssSlice.reducer;
