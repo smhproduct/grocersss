@@ -1,18 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./Header/Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./GroceryShop/Home";
 import Cart from "./GroceryShop/Cart";
 import CartAdvanced from "./GroceryShop/CartAdvanced";
 import { CartProvider } from "react-use-cart";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import Checkout from "./Orders/Checkout";
 import Orders from "./Orders/Orders";
-import { fetchOrders } from "./Orders/Orders";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useDispatch } from "react-redux";
-import { useEffect } from "react";
+import Auth from './Auth/Auth';
+import { useSelector, useDispatch } from "react-redux";
+import { authCheck } from "../redux/grocersssSlice";
+import Logout from "./Auth/Logout";
 
 const Main = () => {
     let theme = createTheme({
@@ -23,25 +24,39 @@ const Main = () => {
         },
     });
 
+    const token = useSelector(state => {
+        return state.token;
+    })
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchOrders());
+        dispatch(authCheck());
     }, [dispatch]);
 
+    let routes = null;
+    if (token === null) {
+        routes = (<Routes>
+            <Route path="/login" element={<Auth />} />
+            <Route path="*" element={<Navigate replace to="/login" />} />
+        </Routes>)
+    } else {
+        routes = (<Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/cartadvanced' element={<CartAdvanced />} />
+            <Route path='/cart' element={<Cart />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/logout" element={<Logout />} />
+            <Route path="*" element={<Navigate replace to="/" />} />
+        </Routes>)
+    }
     return (
         <div>
             <ThemeProvider theme={theme}>
                 <CartProvider>
                     <SnackbarProvider maxSnack={3} autoHideDuration={1000}>
                         <Header />
-                        <Routes>
-                            <Route path='/' element={<Home />} />
-                            <Route path='/cartadvanced' element={<CartAdvanced />} />
-                            <Route path='/cart' element={<Cart />} />
-                            <Route path="/checkout" element={<Checkout />} />
-                            <Route path="/orders" element={<Orders />} />
-                        </Routes>
+                        {routes}
                     </SnackbarProvider>
                 </CartProvider>
             </ThemeProvider>

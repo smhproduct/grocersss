@@ -1,19 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch, } from 'react-redux';
-import { loadOrders, orderLoadFailed } from '../../redux/grocersssSlice'
 import Spinner from '../Spinner/Spinner';
 import Order from './Order';
-import axios from 'axios';
-
-export const fetchOrders = () => dispatch => {
-    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json')
-        .then(response => {
-            dispatch(loadOrders(response.data));
-        })
-        .catch(err => {
-            dispatch(orderLoadFailed());
-        })
-}
+import { fetchOrders } from '../../redux/grocersssSlice';
 
 const Orders = () => {
     const data = useSelector((state) => {
@@ -23,8 +12,8 @@ const Orders = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchOrders());
-    }, [dispatch]);
+        dispatch(fetchOrders(data.token, data.userId));
+    }, [dispatch, data]);
 
 
     let orders = null;

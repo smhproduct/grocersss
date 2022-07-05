@@ -60,17 +60,19 @@ const Checkout = () => {
         });
 
         const order = {
+            userId: data.userId,
             items: items,
             totalItems: totalItems,
             customer: values,
             price: parseFloat(cartTotal + 50 + cartTotal * 0.15 - data.voucherAmount).toFixed(2),
             voucherName: data.voucherName,
             voucherAmount: data.voucherAmount,
-            orderTime: new Date()
+            orderTime: new Date(),
+
         }
         console.log(order);
 
-        axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json", order)
+        axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json?auth=" + data.token, order)
             .then(response => {
                 if (response.status === 200) {
                     setState(prevState => {
@@ -224,9 +226,9 @@ const Checkout = () => {
                             }
                         } onSubmit={handleSubmit}>
 
-                            {<Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                            <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                 <LocationOnIcon sx={{ color: 'action.active', mr: 1, my: 1 }} />
-                                <TextField name="deliveryAddress" id="deliveryAddress" margin='normal' className="form-control" value={values.deliveryAddress} label="Your address" variant="standard" onChange={handleChange} />  </Box>}
+                                <TextField name="deliveryAddress" id="deliveryAddress" margin='normal' className="form-control" value={values.deliveryAddress} label="Your address" variant="standard" onChange={handleChange} />  </Box>
 
                             <span style={{ color: 'red' }}>{errors.deliveryAddress}</span>
 
