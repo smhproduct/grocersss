@@ -7,13 +7,23 @@ body {
 
 }
 
+.authlabel {
+    margin-left: 10px;
+    text-align: right;
+    cursor: pointer;
+    color: black;
+}
+
+.authlabel:hover {
+    color: red;
+}
+
+
 .templateContainer>.searchInput_Container {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
-
-
 }
 
 .templateContainer>.searchInput_Container input {

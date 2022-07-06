@@ -72,7 +72,7 @@ const Checkout = () => {
         }
         console.log(order);
 
-        axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json?auth=" + data.token, order)
+        axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json?auth=" + localStorage.getItem('token'), order)
             .then(response => {
                 if (response.status === 200) {
                     setState(prevState => {

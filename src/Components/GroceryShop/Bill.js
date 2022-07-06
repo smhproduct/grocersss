@@ -45,7 +45,6 @@ const Bill = () => {
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
 
-
     return (
         <div className='container-fluid'>
             <div>

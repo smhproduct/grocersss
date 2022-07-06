@@ -12,8 +12,8 @@ const Orders = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchOrders(data.token, data.userId));
-    }, [dispatch, data]);
+        dispatch(fetchOrders());
+    }, [dispatch]);
 
 
     let orders = null;

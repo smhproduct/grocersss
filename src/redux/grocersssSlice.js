@@ -1,8 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-
-
 const initialState = {
     orders: [],
     orderLoading: true,
@@ -19,6 +17,8 @@ const initialState = {
     userId: null,
     authLoading: false,
     authFailedMsg: null,
+
+    userData: null,
 
 }
 
@@ -41,9 +41,6 @@ export const grocersssSlice = createSlice({
                 orderErr: false
             }
         },
-
-
-
         orderLoadFailed: (state) => {
             return {
                 ...state,
@@ -51,7 +48,6 @@ export const grocersssSlice = createSlice({
                 orderLoading: false
             }
         },
-
         loadProductData: (state, action) => {
             let productData = [];
             for (let key in action.payload) {
@@ -93,7 +89,6 @@ export const grocersssSlice = createSlice({
             }
         },
         authSuccess: (state, action) => {
-            console.log(action.payload);
             return {
                 ...state,
                 token: action.payload.idToken,
@@ -121,15 +116,21 @@ export const grocersssSlice = createSlice({
                 ...state,
                 authFailedMsg: action.payload
             }
+        },
+        userDataRedux: (state, action) => {
+            return {
+                ...state,
+                userData: action.payload
+            }
         }
 
     }
 });
 
 //Fetched Orders through multiple dispatch
-export const fetchOrders = (token, userId) => dispatch => {
-    const queryParams = '&orderBy="userId"&equalTo="' + userId + '"';
-    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json?auth=' + token + queryParams)
+export const fetchOrders = () => dispatch => {
+    const queryParams = '&orderBy="userId"&equalTo="' + localStorage.getItem('userId') + '"';
+    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json?auth=' + localStorage.getItem('token') + queryParams)
         .then(response => {
             dispatch(loadOrders(response.data));
         })
@@ -138,8 +139,8 @@ export const fetchOrders = (token, userId) => dispatch => {
         })
 }
 
-//Worked with SignUp and SignIn
-export const auth = (email, password, mode) => dispatch => {
+//Worked with SignUp and SignIn, added data to both authentication and database, also received username for avatar
+export const auth = (email, password, fname, lname, mode) => dispatch => {
     dispatch(authLoading(true));
     const authData = {
         email: email,
@@ -161,12 +162,33 @@ export const auth = (email, password, mode) => dispatch => {
             localStorage.setItem('userId', response.data.localId);
             const expirationTime = new Date(new Date().getTime() + response.data.expiresIn * 1000);
             localStorage.setItem('expirationTime', expirationTime);
-            dispatch(authSuccess(response.data))
+            const queryParams = '&orderBy="userId"&equalTo="' + localStorage.getItem('userId') + '"';
+            if (mode === "Sign Up") {
+                let userData = {
+                    userId: response.data.localId,
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    registered: new Date()
+                }
+
+                axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData)
+            }
+            axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json?auth=' + localStorage.getItem('token') + queryParams)
+                .then(res => {
+                    for (let key in res.data) {
+                        console.log(res.data[key]);
+                        dispatch(userDataRedux(res.data[key]));
+                    }
+                })
+            dispatch(authSuccess(response.data));
         })
         .catch(err => {
             dispatch(authLoading(false));
             dispatch(authFailed(err.response.data.error.message));
         })
+
+
 }
 
 
@@ -187,6 +209,6 @@ export const authCheck = () => dispatch => {
 }
 
 
-export const { loadOrders, orderLoadFailed, addVoucher, resetVoucher, loadProductData, productDataFailed, authSuccess, logout, authLoading, authFailed } = grocersssSlice.actions;
+export const { loadOrders, orderLoadFailed, addVoucher, resetVoucher, loadProductData, productDataFailed, authSuccess, logout, authLoading, authFailed, userDataRedux } = grocersssSlice.actions;
 
 export default grocersssSlice.reducer;

@@ -1,14 +1,9 @@
 .Navigation {
-    margin-bottom: 0px;
     box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.13);
-
 }
 
 .Brand {
-    color: white;
-    font-size: 15px;
     margin-top: -20px;
-
 }
 
 .Brand:hover {
@@ -19,10 +14,9 @@
 .NavLink {
     text-decoration: none;
     color: white !important;
-    font-size: 20px;
-    margin-right: 8px;
+    font-size: 1.1rem;
     padding: 6px;
-    opacity: 0.95;
+    margin-right: 8px;
 }
 
 .NavLink:hover {
@@ -31,11 +25,23 @@
     border-bottom: 1px solid white;
 }
 
+.avatar {
+    text-decoration: none;
+    color: #d70f64 !important;
+    font-size: 20px;
+    margin-left: 6px;
+    padding: 6px;
+    font-size: 1.1rem;
+}
+
+.avatar:hover {
+    color: #d70f64 !important;
+    text-decoration: none;
+}
+
 
 
 .active {
-    text-shadow: 1px 1px grey !important;
-    color: white !important;
     border-bottom: 3px solid white;
     opacity: 1;
 }

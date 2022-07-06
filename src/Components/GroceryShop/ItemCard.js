@@ -16,7 +16,6 @@ const ItemCard = (props) => {
     }
     const { addItem } = useCart();
 
-
     const handleClickVariant = (variant) => {
         enqueueSnackbar(props.title + ' Added To Cart!', { variant });
     };
@@ -36,7 +35,6 @@ const ItemCard = (props) => {
                             <AddShoppingCartIcon style={{ color: "#D70F64" }} />
                         </IconButton>
                     </p>
-
                 </div>
             </div >
             <Modal
@@ -74,8 +72,6 @@ const ItemCard = (props) => {
             </Modal>
 
         </div>
-
-
 
     );
 };
