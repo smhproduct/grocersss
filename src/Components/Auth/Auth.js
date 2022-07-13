@@ -86,7 +86,9 @@ const Auth = () => {
                             } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[A-Z]{2,}$/i.test(values.email)) {
                                 errors.email = 'Invalid email address';
                             } else if (!/^(?!.*@(?:admin)).*@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/i.test(values.email)) {
-                                errors.email = 'Invalid email address: @admin reserved for administrators';
+                                errors.email = 'Invalid email address: @admin reserved for Administrators';
+                            } else if (!/^(?!.*@(?:rider)).*@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/i.test(values.email)) {
+                                errors.email = 'Invalid email address: @rider reserved for Riders';
                             }
                             if (!values.password) {
                                 errors.password = 'Required';
