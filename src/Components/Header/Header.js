@@ -117,11 +117,54 @@ const Header = () => {
                     </NavItem>
                 </Nav>
             )
+        } else if (appUser === "Admin") {
+            links = (
+                <Nav>
+                    <NavItem>
+                        <NavLink to="/" className="NavLink">Home</NavLink>
+                    </NavItem>
+                    <NavItem style={{}}>
+                        <div className="d-flex flex-row">
+                            <div style={{ marginRight: '8px', fontSize: "1.1rem", color: 'white' }} className="">{userData?.fname.toString().toUpperCase()}
+                            </div>
+                            <div>
+
+                                <Avatar
+                                    id="fade-button"
+                                    sx={{ width: 28, height: 28 }}
+                                    aria-controls={open ? 'fade-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                    onClick={handleClick}
+                                    style={{ color: '#d70f64', backgroundColor: 'white', cursor: 'pointer' }}></Avatar>
+                                <Menu
+                                    id="fade-menu"
+                                    MenuListProps={{
+                                        'aria-labelledby': 'fade-button',
+                                    }}
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={handleClose}
+                                    TransitionComponent={Fade}
+                                >
+                                    <NavItem>
+                                        <NavLink to="orders" className="avatar" onClick={handleClose}>Orders <ArticleIcon sx={{ color: "primary", width: 18, height: 18 }} /></NavLink>
+                                    </NavItem>
+                                    <hr width="80%" style={{ marginLeft: 'auto', marginRight: 'auto' }} />
+                                    <NavItem>
+                                        <NavLink to="/logout" className="avatar" onClick={handleClose}>Logout <LogoutIcon sx={{ color: "primary", width: 18, height: 18 }} /></NavLink>
+                                    </NavItem>
+                                </Menu>
+                            </div>
+                        </div>
+                    </NavItem>
+                </Nav>
+            )
         } else {
             links = (
                 <Nav>
                     <NavItem>
-                        <NavLink to="/adminhome" className="NavLink">Home</NavLink>
+                        <NavLink to="/" className="NavLink">Home</NavLink>
                     </NavItem>
                     <NavItem style={{}}>
                         <div className="d-flex flex-row">

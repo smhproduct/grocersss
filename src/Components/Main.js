@@ -15,6 +15,7 @@ import { authCheck } from "../redux/grocersssSlice";
 import Logout from "./Auth/Logout";
 import AuthSelector from "./Auth/AuthSelector";
 import AdminHome from "./GroceryShop/AdminHome";
+import RiderHome from "./GroceryShop/RiderHome";
 
 const Main = () => {
     let theme = createTheme({
@@ -54,9 +55,16 @@ const Main = () => {
                 <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>)
-        } else {
+        } else if (appUser === "Admin") {
             routes = (<Routes>
                 <Route path='/' element={<AdminHome />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="*" element={<Navigate replace to="/" />} />
+            </Routes>)
+        } else if (appUser === "Rider") {
+            routes = (<Routes>
+                <Route path='/' element={<RiderHome />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<Navigate replace to="/" />} />

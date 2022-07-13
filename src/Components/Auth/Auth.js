@@ -207,7 +207,7 @@ const Auth = () => {
         )
     }
     return (
-        <div style={{ marginTop: '180px' }}>
+        <div style={{ marginTop: '70px' }}>
             <div className='container'>
                 {err}
                 {form}

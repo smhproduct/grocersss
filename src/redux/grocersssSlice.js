@@ -182,7 +182,7 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                     email: email,
                     registered: new Date()
                 }
-                mode === "Sign Up" ? axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData) : axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/adminData.json", userData)
+                mode === "Sign Up" ? axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData) : (appUser === "Admin" ? axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/adminData.json", userData) : axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json", userData))
 
             }
 
@@ -196,12 +196,21 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                             dispatch(userDataRedux(res.data[key]));
                         }
                     })
-            } else if (appUser === "Admin User") {
+            } else if (appUser === "Admin") {
                 axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/adminData.json?auth=' + localStorage.getItem('token') + queryParams)
                     .then(res => {
                         for (let key in res.data) {
                             console.log(res.data[key]);
                             console.log('eta admin');
+                            dispatch(userDataRedux(res.data[key]));
+                        }
+                    })
+            } else {
+                axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json?auth=' + localStorage.getItem('token') + queryParams)
+                    .then(res => {
+                        for (let key in res.data) {
+                            console.log(res.data[key]);
+                            console.log('eta rider');
                             dispatch(userDataRedux(res.data[key]));
                         }
                     })

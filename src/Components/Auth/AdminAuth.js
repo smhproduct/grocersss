@@ -10,6 +10,9 @@ import Box from '@mui/material/Box';
 import { Button, FormControl, InputLabel, Input, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logo from '../../assets/grocersss.png';
+import PersonIcon from '@mui/icons-material/Person';
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import MenuItem from '@mui/material/MenuItem';
 
 const AdminAuth = () => {
     const [val, setVal] = useState({
@@ -60,9 +63,11 @@ const AdminAuth = () => {
         form = (<Spinner />)
     } else {
         form = (
-            <div className='row align-items-center container'>
+            <div className='row align-items-center container mx-1 mx-md-0'>
                 <div className='d-none d-md-block col-md-6'>
                     <img src={Logo} alt='grocersss' className='img-fluid' />
+
+
 
                 </div>
                 <div style={{ borderRadius: '8px' }} className='col-md-6 col-sm-12 shadow align-items-center'>
@@ -73,18 +78,27 @@ const AdminAuth = () => {
                             email: "",
                             password: "",
                             passwordConfirm: "",
+                            adminType: "",
                         }}
                         onSubmit={
                             (values) => {
-                                dispatch(auth(values.email, values.password, values.fname, values.lname, mode, 'Admin'))
+                                dispatch(auth(values.email, values.password, values.fname, values.lname, mode, values.adminType))
                             }
                         }
                         validate={(values) => {
                             const errors = {};
+                            if (!values.adminType) {
+                                errors.adminType = 'Required';
+                            }
                             if (!values.email) {
                                 errors.email = 'Required';
-                            } else if (!/^[a-zA-Z0-9._%+-]+@admin.app$/i.test(values.email)) {
-                                errors.email = 'Invalid email address, must contain @admin.app';
+                            } else if (values.email) {
+                                if (values.adminType === "Admin" && !/^[a-zA-Z0-9._%+-]+@admin.app$/i.test(values.email)) {
+                                    errors.email = 'Invalid email address, must contain @admin.app';
+                                }
+                                else if (values.adminType === "Rider" && !/^[a-zA-Z0-9._%+-]+@rider.app$/i.test(values.email)) {
+                                    errors.email = 'Invalid email address, must contain @rider.app';
+                                }
                             }
                             if (!values.password) {
                                 errors.password = 'Required';
@@ -92,6 +106,7 @@ const AdminAuth = () => {
                                 errors.password = 'Must be atleast 6 characters!';
                             }
                             if (mode === "Admin Sign Up") {
+
                                 if (!values.fname) {
                                     errors.fname = 'Required';
                                 }
@@ -124,7 +139,29 @@ const AdminAuth = () => {
                                         marginTop: '-40px'
                                     }
                                 } onSubmit={handleSubmit}>
+                                    <Box sx={{ display: 'flex', alignItems: 'flex-end' }} >
+                                        <TextField
+                                            style={{ width: '120px' }}
+                                            id="adminType"
+                                            name='adminType'
+                                            margin='normal'
+                                            variant='standard'
+                                            select
+                                            label="Admin Type"
+                                            value={values.adminType}
+                                            onChange={handleChange}
+                                            placeholder='Admin Type'
+                                        >
+                                            <MenuItem key="Admin" value='Admin'>
+                                                <PersonIcon color="primary" />  Admin
+                                            </MenuItem>
+                                            <MenuItem key="Rider" value='Rider'>
+                                                <DeliveryDiningIcon color="primary" /> Rider
+                                            </MenuItem>
+                                        </TextField>
+                                    </Box>
                                     {mode === 'Admin Sign Up' ? <div className='row'>
+
                                         <div className='col-6'>
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <TextField name="fname" id="fname" margin='normal' className="form-control" value={values.fname} label="First Name" variant="standard" onChange={handleChange} onBlur={handleBlur} />
@@ -205,7 +242,7 @@ const AdminAuth = () => {
         )
     }
     return (
-        <div style={{ marginTop: '180px' }}>
+        <div style={{ marginTop: '70px' }}>
             <div className='container'>
                 {err}
                 {form}
