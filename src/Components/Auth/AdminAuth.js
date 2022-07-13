@@ -11,7 +11,7 @@ import { Button, FormControl, InputLabel, Input, InputAdornment, IconButton } fr
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logo from '../../assets/grocersss.png';
 
-const Auth = () => {
+const AdminAuth = () => {
     const [val, setVal] = useState({
         password: '',
         showPassword: false,
@@ -38,7 +38,7 @@ const Auth = () => {
     const handleMouseDownConfirmPassword = (event) => {
         event.preventDefault();
     };
-    const [mode, setMode] = useState('Login');
+    const [mode, setMode] = useState('Admin Login');
     const dispatch = useDispatch();
     const authLoading = useSelector(state => {
         return state.authLoading
@@ -60,12 +60,12 @@ const Auth = () => {
         form = (<Spinner />)
     } else {
         form = (
-            <div className='row align-items-center container mx-1 mx-md-0'>
+            <div className='row align-items-center container'>
                 <div className='d-none d-md-block col-md-6'>
                     <img src={Logo} alt='grocersss' className='img-fluid' />
 
                 </div>
-                <div style={{ borderRadius: '8px', }} className='mx-sm-auto col-md-6 col-sm-12 shadow align-items-center'>
+                <div style={{ borderRadius: '8px' }} className='col-md-6 col-sm-12 shadow align-items-center'>
                     <Formik
                         initialValues={{
                             fname: "",
@@ -76,24 +76,22 @@ const Auth = () => {
                         }}
                         onSubmit={
                             (values) => {
-                                dispatch(auth(values.email, values.password, values.fname, values.lname, mode, 'User'))
+                                dispatch(auth(values.email, values.password, values.fname, values.lname, mode, 'Admin'))
                             }
                         }
                         validate={(values) => {
                             const errors = {};
                             if (!values.email) {
                                 errors.email = 'Required';
-                            } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[A-Z]{2,}$/i.test(values.email)) {
-                                errors.email = 'Invalid email address';
-                            } else if (!/^(?!.*@(?:admin)).*@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/i.test(values.email)) {
-                                errors.email = 'Invalid email address: @admin reserved for administrators';
+                            } else if (!/^[a-zA-Z0-9._%+-]+@admin.app$/i.test(values.email)) {
+                                errors.email = 'Invalid email address, must contain @admin.app';
                             }
                             if (!values.password) {
                                 errors.password = 'Required';
                             } else if (values.password.length < 6) {
                                 errors.password = 'Must be atleast 6 characters!';
                             }
-                            if (mode === "Sign Up") {
+                            if (mode === "Admin Sign Up") {
                                 if (!values.fname) {
                                     errors.fname = 'Required';
                                 }
@@ -117,7 +115,7 @@ const Auth = () => {
                                     fontSize: '30px',
                                     textAlign: 'center',
                                     color: '#d70f64',
-                                }}>{mode === 'Sign Up' ? 'Sign Up' : "Login"}</p>
+                                }}>{mode === 'Admin Sign Up' ? 'Admin Sign Up' : "Admin Login"}</p>
                                 <br />
                                 <form style={
                                     {
@@ -126,7 +124,7 @@ const Auth = () => {
                                         marginTop: '-40px'
                                     }
                                 } onSubmit={handleSubmit}>
-                                    {mode === 'Sign Up' ? <div className='row'>
+                                    {mode === 'Admin Sign Up' ? <div className='row'>
                                         <div className='col-6'>
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <TextField name="fname" id="fname" margin='normal' className="form-control" value={values.fname} label="First Name" variant="standard" onChange={handleChange} onBlur={handleBlur} />
@@ -168,7 +166,7 @@ const Auth = () => {
                                         </FormControl>
                                     </Box>
                                     {touched.password && errors.password ? (<span style={{ color: 'red' }}>{errors.password}</span>) : null}
-                                    {mode === 'Sign Up' ? <div>
+                                    {mode === 'Admin Sign Up' ? <div>
                                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                             <FormControl sx={{ width: '100%' }} variant="standard">
                                                 <InputLabel >Confirm Password</InputLabel>
@@ -196,8 +194,8 @@ const Auth = () => {
                                         {touched.passwordConfirm && errors.passwordConfirm ? (<span style={{ color: 'red' }}>{errors.passwordConfirm}</span>) : null}
                                     </div> : null}
                                     <br />
-                                    <Button type='submit' variant='contained' color='primary' className=" mr-auto" > {mode === "Sign Up" ? "Sign Up" : "Login"}</Button >
-                                    <label className='authlabel' onClick={() => setMode(mode === "Sign Up" ? "Login" : "Sign Up")}><i>{mode === 'Sign Up' ? 'Already have an account? Login' : "Don't have an account? Sign Up"}</i></label>
+                                    <Button type='submit' variant='contained' color='primary' className=" mr-auto" > {mode === "Admin Sign Up" ? "Sign Up" : "Login"}</Button >
+                                    <label className='authlabel' onClick={() => setMode(mode === "Admin Sign Up" ? "Admin Login" : "Admin Sign Up")}><i>{mode === 'Admin Sign Up' ? 'Already an admin? Login' : "Haven't registered as admin? Sign Up"}</i></label>
                                 </form>
                             </div>
                         )}
@@ -216,4 +214,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default AdminAuth;

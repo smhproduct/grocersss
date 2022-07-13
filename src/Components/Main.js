@@ -10,10 +10,11 @@ import { SnackbarProvider } from "notistack";
 import Checkout from "./Orders/Checkout";
 import Orders from "./Orders/Orders";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import Auth from './Auth/Auth';
 import { useSelector, useDispatch } from "react-redux";
 import { authCheck } from "../redux/grocersssSlice";
 import Logout from "./Auth/Logout";
+import AuthSelector from "./Auth/AuthSelector";
+import AdminHome from "./GroceryShop/AdminHome";
 
 const Main = () => {
     let theme = createTheme({
@@ -27,29 +28,41 @@ const Main = () => {
     const token = useSelector(state => {
         return state.token;
     })
+    const appUser = useSelector(state => {
+        return state.appUser;
+    })
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(authCheck());
-
     }, [dispatch]);
 
     let routes = null;
     if (token === null) {
         routes = (<Routes>
-            <Route path="/login" element={<Auth />} />
+            <Route path="/login" element={<AuthSelector />} />
             <Route path="*" element={<Navigate replace to="/login" />} />
         </Routes>)
     } else {
-        routes = (<Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/cartadvanced' element={<CartAdvanced />} />
-            <Route path='/cart' element={<Cart />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/orders" element={<Orders />} />
-            <Route path="/logout" element={<Logout />} />
-            <Route path="*" element={<Navigate replace to="/" />} />
-        </Routes>)
+        if (appUser === "User") {
+            routes = (<Routes>
+                <Route path='/' element={<Home />} />
+                <Route path='/cartadvanced' element={<CartAdvanced />} />
+                <Route path='/cart' element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="*" element={<Navigate replace to="/" />} />
+            </Routes>)
+        } else {
+            routes = (<Routes>
+                <Route path='/' element={<AdminHome />} />
+                <Route path="/orders" element={<Orders />} />
+                <Route path="/logout" element={<Logout />} />
+                <Route path="*" element={<Navigate replace to="/" />} />
+            </Routes>)
+        }
+
     }
     return (
         <div>

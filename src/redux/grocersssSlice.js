@@ -13,6 +13,7 @@ const initialState = {
     productDataLoading: true,
     productDataErr: false,
 
+    appUser: null,
     token: null,
     userId: null,
     authLoading: false,
@@ -88,6 +89,13 @@ export const grocersssSlice = createSlice({
                 voucherAmount: 0
             }
         },
+
+        appUserSuccess: (state, action) => {
+            return {
+                ...state,
+                appUser: action.payload
+            }
+        },
         authSuccess: (state, action) => {
             return {
                 ...state,
@@ -101,7 +109,8 @@ export const grocersssSlice = createSlice({
             return {
                 ...state,
                 token: null,
-                userId: null
+                userId: null,
+                appUser: null
             }
 
         },
@@ -140,15 +149,16 @@ export const fetchOrders = () => dispatch => {
 }
 
 //Worked with SignUp and SignIn, added data to both authentication and database, also received username for avatar
-export const auth = (email, password, fname, lname, mode) => dispatch => {
+export const auth = (email, password, fname, lname, mode, appUser) => dispatch => {
     dispatch(authLoading(true));
     const authData = {
         email: email,
         password: password,
         returnSecureToken: true,
     }
+    console.log(appUser);
     let authUrl = null;
-    if (mode === "Sign Up") {
+    if (mode === "Sign Up" || mode === "Admin Sign Up") {
         authUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
     } else {
         authUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
@@ -158,12 +168,13 @@ export const auth = (email, password, fname, lname, mode) => dispatch => {
     axios.post(authUrl + API_KEY, authData)
         .then(response => {
             dispatch(authLoading(false));
+            dispatch(appUserSuccess(appUser));
             localStorage.setItem('token', response.data.idToken);
             localStorage.setItem('userId', response.data.localId);
+            localStorage.setItem('appUser', appUser);
             const expirationTime = new Date(new Date().getTime() + response.data.expiresIn * 1000);
             localStorage.setItem('expirationTime', expirationTime);
-            const queryParams = '&orderBy="userId"&equalTo="' + localStorage.getItem('userId') + '"';
-            if (mode === "Sign Up") {
+            if (mode === "Sign Up" || mode === "Admin Sign Up") {
                 let userData = {
                     userId: response.data.localId,
                     fname: fname,
@@ -171,16 +182,31 @@ export const auth = (email, password, fname, lname, mode) => dispatch => {
                     email: email,
                     registered: new Date()
                 }
+                mode === "Sign Up" ? axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData) : axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/adminData.json", userData)
 
-                axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData)
             }
-            axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json?auth=' + localStorage.getItem('token') + queryParams)
-                .then(res => {
-                    for (let key in res.data) {
-                        console.log(res.data[key]);
-                        dispatch(userDataRedux(res.data[key]));
-                    }
-                })
+
+
+            const queryParams = '&orderBy="userId"&equalTo="' + localStorage.getItem('userId') + '"';
+            if (appUser === "User") {
+                axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json?auth=' + localStorage.getItem('token') + queryParams)
+                    .then(res => {
+                        for (let key in res.data) {
+                            console.log(res.data[key]);
+                            dispatch(userDataRedux(res.data[key]));
+                        }
+                    })
+            } else if (appUser === "Admin User") {
+                axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/adminData.json?auth=' + localStorage.getItem('token') + queryParams)
+                    .then(res => {
+                        for (let key in res.data) {
+                            console.log(res.data[key]);
+                            console.log('eta admin');
+                            dispatch(userDataRedux(res.data[key]));
+                        }
+                    })
+            }
+
             dispatch(authSuccess(response.data));
         })
         .catch(err => {
@@ -209,6 +235,6 @@ export const authCheck = () => dispatch => {
 }
 
 
-export const { loadOrders, orderLoadFailed, addVoucher, resetVoucher, loadProductData, productDataFailed, authSuccess, logout, authLoading, authFailed, userDataRedux } = grocersssSlice.actions;
+export const { loadOrders, orderLoadFailed, addVoucher, resetVoucher, loadProductData, productDataFailed, appUserSuccess, authSuccess, logout, authLoading, authFailed, userDataRedux } = grocersssSlice.actions;
 
 export default grocersssSlice.reducer;
