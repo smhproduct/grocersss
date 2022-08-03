@@ -15,7 +15,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSelector, useDispatch } from "react-redux";
 import { authCheck } from "../redux/grocersssSlice";
 import Logout from "./Auth/Logout";
-import AuthSelector from "./Auth/AuthSelector";
 import AdminHome from "./GroceryShop/AdminHome";
 import RiderHome from "./GroceryShop/RiderHome";
 import Auth from "./Auth/Auth";
@@ -91,7 +90,6 @@ const Main = () => {
                     <SnackbarProvider maxSnack={3} autoHideDuration={1000}>
                         <Header />
                         {routes}
-
                     </SnackbarProvider>
                 </CartProvider>
             </ThemeProvider>
