@@ -11,8 +11,9 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import axios from 'axios';
 import { useSelector, useDispatch, } from 'react-redux';
-import { loadProductData, productDataFailed } from '../../redux/grocersssSlice'
+import { loadProductData, productDataFailed, fetchProductData } from '../../redux/grocersssSlice'
 import Spinner from '../Spinner/Spinner';
+import Footer2 from "../Footer/Footer2";
 
 
 
@@ -28,16 +29,7 @@ const Home = () => {
     const [searchTerm, setSearchTerm] = useState("");//for search bar
 
     const [value, setValue] = React.useState(0);//for tab value
-    const fetchProductData = () => dispatch => {
 
-        axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/productData.json')
-            .then(response => {
-                dispatch(loadProductData(response.data));
-            })
-            .catch(err => {
-                dispatch(productDataFailed());
-            })
-    }
     useEffect(() => {
         dispatch(fetchProductData());
     }, [dispatch]);
@@ -137,7 +129,7 @@ const Home = () => {
                 </div>
                 <Top />
             </div>
-
+            <Footer2 />
         </div>)
     }
 
@@ -149,6 +141,7 @@ const Home = () => {
     return (
         <div /* style={{ marginTop: '90px' }} */>
             {data.productDataLoading ? <Spinner /> : home}
+
         </div>
     );
 };

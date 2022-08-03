@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import Header from "./Header/Header";
+import Footer from './Footer/Footer';
+import Footer2 from "./Footer/Footer2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./GroceryShop/Home";
 import Cart from "./GroceryShop/Cart";
@@ -16,6 +18,9 @@ import Logout from "./Auth/Logout";
 import AuthSelector from "./Auth/AuthSelector";
 import AdminHome from "./GroceryShop/AdminHome";
 import RiderHome from "./GroceryShop/RiderHome";
+import Auth from "./Auth/Auth";
+import RiderAuth from "./Auth/RiderAuth";
+
 
 const Main = () => {
     let theme = createTheme({
@@ -23,15 +28,19 @@ const Main = () => {
             primary: {
                 main: '#d70f64',
             },
+            secondary: {
+                main: '#d7d7d7',
+            },
         },
     });
 
     const token = useSelector(state => {
         return state.token;
     })
-    const appUser = useSelector(state => {
+    /* const appUser = useSelector(state => {
         return state.appUser;
-    })
+    }) */
+    const appUser = localStorage.getItem('appUser');
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -41,31 +50,34 @@ const Main = () => {
     let routes = null;
     if (token === null) {
         routes = (<Routes>
-            <Route path="/login" element={<AuthSelector />} />
-            <Route path="*" element={<Navigate replace to="/login" />} />
+            <Route path="/login" element={<Auth />} />
+            <Route path="/riderlogin" element={<RiderAuth />} />
+            <Route path='/' element={<Home />} />
+            <Route path='/cartadvanced' element={<CartAdvanced />} />
+            <Route path="*" element={<Navigate replace to="/" />} />
         </Routes>)
     } else {
         if (appUser === "User") {
             routes = (<Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/cartadvanced' element={<CartAdvanced />} />
-                <Route path='/cart' element={<Cart />} />
                 <Route path="/checkout" element={<Checkout />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<Navigate replace to="/" />} />
-            </Routes>)
-        } else if (appUser === "Admin") {
+            </Routes>
+            )
+        }  /*else if (appUser === "Admin") {
             routes = (<Routes>
                 <Route path='/' element={<AdminHome />} />
                 <Route path="/orders" element={<Orders />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>)
-        } else if (appUser === "Rider") {
+        } */else if (appUser === "Rider") {
             routes = (<Routes>
-                <Route path='/' element={<RiderHome />} />
-                <Route path="/orders" element={<Orders />} />
+                {/* <Route path='/' element={<RiderHome />} /> */}
+                <Route path="/" element={<Orders />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>)
@@ -79,6 +91,7 @@ const Main = () => {
                     <SnackbarProvider maxSnack={3} autoHideDuration={1000}>
                         <Header />
                         {routes}
+
                     </SnackbarProvider>
                 </CartProvider>
             </ThemeProvider>

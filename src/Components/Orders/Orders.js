@@ -46,7 +46,7 @@ const Orders = () => {
     }
     document.title = "Orders | GROCERSSS";
     return (
-        <div style={{ marginTop: '90px' }}>
+        <div /* style={{ marginTop: '90px' }} */>
             {data.orderLoading ? <Spinner /> : orders}
         </div>
     );

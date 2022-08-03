@@ -10,8 +10,11 @@ import Box from '@mui/material/Box';
 import { Button, FormControl, InputLabel, Input, InputAdornment, IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import Logo from '../../assets/grocersss.png';
+import PersonIcon from '@mui/icons-material/Person';
+import DeliveryDiningIcon from '@mui/icons-material/DeliveryDining';
+import MenuItem from '@mui/material/MenuItem';
 
-const Auth = () => {
+const RiderAuth = () => {
     const [val, setVal] = useState({
         password: '',
         showPassword: false,
@@ -38,7 +41,7 @@ const Auth = () => {
     const handleMouseDownConfirmPassword = (event) => {
         event.preventDefault();
     };
-    const [mode, setMode] = useState('Login');
+    const [mode, setMode] = useState('Rider Login');
     const dispatch = useDispatch();
     const authLoading = useSelector(state => {
         return state.authLoading
@@ -64,8 +67,10 @@ const Auth = () => {
                 <div className='d-none d-md-block col-md-6'>
                     <img src={Logo} alt='grocersss' className='img-fluid' />
 
+
+
                 </div>
-                <div style={{ borderRadius: '8px', }} className='mx-sm-auto col-md-6 col-sm-12 shadow align-items-center'>
+                <div style={{ borderRadius: '8px' }} className='col-md-6 col-sm-12 shadow align-items-center'>
                     <Formik
                         initialValues={{
                             fname: "",
@@ -76,26 +81,25 @@ const Auth = () => {
                         }}
                         onSubmit={
                             (values) => {
-                                dispatch(auth(values.email, values.password, values.fname, values.lname, mode, 'User'))
+                                dispatch(auth(values.email, values.password, values.fname, values.lname, mode, "Rider"))
                             }
                         }
                         validate={(values) => {
                             const errors = {};
+
                             if (!values.email) {
                                 errors.email = 'Required';
-                            } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9]+\.[A-Z]{2,}$/i.test(values.email)) {
-                                errors.email = 'Invalid email address';
-                            } else if (!/^(?!.*@(?:admin)).*@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/i.test(values.email)) {
-                                errors.email = 'Invalid email address: @admin reserved for Administrators';
-                            } else if (!/^(?!.*@(?:rider)).*@[a-zA-Z0-9]+\.[a-zA-Z]{2,}$/i.test(values.email)) {
-                                errors.email = 'Invalid email address: @rider reserved for Riders';
+                            } else if (values.email && !/^[a-zA-Z0-9._%+-]+@rider.app$/i.test(values.email)) {
+                                errors.email = 'Invalid email address, must contain @rider.app';
+
                             }
                             if (!values.password) {
                                 errors.password = 'Required';
                             } else if (values.password.length < 6) {
                                 errors.password = 'Must be atleast 6 characters!';
                             }
-                            if (mode === "Sign Up") {
+                            if (mode === "Rider Sign Up") {
+
                                 if (!values.fname) {
                                     errors.fname = 'Required';
                                 }
@@ -119,7 +123,7 @@ const Auth = () => {
                                     fontSize: '30px',
                                     textAlign: 'center',
                                     color: '#d70f64',
-                                }}>{mode === 'Sign Up' ? 'Sign Up' : "Login"}</p>
+                                }}>{mode === 'Rider Sign Up' ? 'Rider Sign Up' : "Rider Login"}</p>
                                 <br />
                                 <form style={
                                     {
@@ -128,7 +132,9 @@ const Auth = () => {
                                         marginTop: '-40px'
                                     }
                                 } onSubmit={handleSubmit}>
-                                    {mode === 'Sign Up' ? <div className='row'>
+
+                                    {mode === 'Rider Sign Up' ? <div className='row'>
+
                                         <div className='col-6'>
                                             <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                                 <TextField name="fname" id="fname" margin='normal' className="form-control" value={values.fname} label="First Name" variant="standard" onChange={handleChange} onBlur={handleBlur} />
@@ -170,7 +176,7 @@ const Auth = () => {
                                         </FormControl>
                                     </Box>
                                     {touched.password && errors.password ? (<span style={{ color: 'red' }}>{errors.password}</span>) : null}
-                                    {mode === 'Sign Up' ? <div>
+                                    {mode === 'Rider Sign Up' ? <div>
                                         <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                                             <FormControl sx={{ width: '100%' }} variant="standard">
                                                 <InputLabel >Confirm Password</InputLabel>
@@ -198,8 +204,8 @@ const Auth = () => {
                                         {touched.passwordConfirm && errors.passwordConfirm ? (<span style={{ color: 'red' }}>{errors.passwordConfirm}</span>) : null}
                                     </div> : null}
                                     <br />
-                                    <Button type='submit' variant='contained' color='primary' className=" mr-auto" > {mode === "Sign Up" ? "Sign Up" : "Login"}</Button >
-                                    <label className='authlabel' onClick={() => setMode(mode === "Sign Up" ? "Login" : "Sign Up")}><i>{mode === 'Sign Up' ? 'Already have an account? Login' : "Don't have an account? Sign Up"}</i></label>
+                                    <Button type='submit' variant='contained' color='primary' className=" mr-auto" > {mode === "Rider Sign Up" ? "Sign Up" : "Login"}</Button >
+                                    <label className='authlabel' onClick={() => setMode(mode === "Rider Sign Up" ? "Rider Login" : "Rider Sign Up")}><i>{mode === 'Rider Sign Up' ? 'Already an Rider? Login' : "Haven't registered as Rider? Sign Up"}</i></label>
                                 </form>
                             </div>
                         )}
@@ -218,4 +224,4 @@ const Auth = () => {
     );
 };
 
-export default Auth;
+export default RiderAuth;

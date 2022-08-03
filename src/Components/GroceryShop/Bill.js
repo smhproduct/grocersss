@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Table } from 'reactstrap';
 import { useCart } from "react-use-cart";
-import { Link } from 'react-router-dom';
-import { ModalBody, Modal, Button } from "reactstrap";
+import { Link, useNavigate } from 'react-router-dom';
+import { ModalBody, Modal } from "reactstrap";
 import Box from '@mui/material/Box';
 import { TextField } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { addVoucher, resetVoucher } from '../../redux/grocersssSlice';
+import Button from '@mui/material/Button';
 
 const Bill = () => {
     const {
@@ -18,6 +19,8 @@ const Bill = () => {
     })
     const dispatch = useDispatch();
 
+    let navigate = useNavigate();
+    const token = localStorage.getItem('token');
 
     const [voucher, setVoucher] = useState("");
     const [error, setError] = useState(false);
@@ -128,9 +131,9 @@ const Bill = () => {
                         {error ? <label style={{ color: 'red' }}>{errMsg}</label> : ""}
                         <br />
 
-                        <Button style={{ backgroundColor: '#d70f64' }} className="mr-auto" >Apply Voucher</Button>
+                        <Button color='primary' variant='contained' className="mr-auto" >Apply Voucher</Button>
 
-                        <Button color='secondary' className='mx-1' onClick={toggleModal}>Cancel</Button>
+                        <Button color='secondary' variant='contained' className='mx-1' onClick={toggleModal}>Cancel</Button>
 
 
                     </form>
@@ -138,11 +141,17 @@ const Bill = () => {
             </Modal>
 
             <div>
-                <Link to={'/checkout'}>
+                {/* <Link to={'/checkout'}>
                     <button style={{ backgroundColor: "#D70F64", color: "white" }} className="btn ms-2">
                         Continue to Checkout{" "}
                     </button>
-                </Link>
+                </Link> */}
+
+
+                <Button onClick={() => navigate(token ? '/checkout' : '/login', { replace: true })} color="primary" variant='contained' className="btn ms-2">
+                    Continue to Checkout{" "}
+                </Button>
+
             </div>
         </div>
     );

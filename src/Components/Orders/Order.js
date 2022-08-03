@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
-import { Card, Badge, CardBody, Button, CardTitle, CardText, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Card, Badge, CardBody, CardTitle, CardText, Modal, ModalHeader, ModalBody } from 'reactstrap';
+import Button from '@mui/material/Button';
 
 const Order = props => {
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
 
+    const handleBadge = (status) => {
+        if (status === "Pending") return "warning";
+        else if (status === "Completed") return "success";
+        else return "danger";
+
+    }
 
     const itemSummary = props.order.items?.map(item => {
         return (
@@ -26,10 +33,10 @@ const Order = props => {
                 <CardBody>
                     <CardTitle className='row'>
                         <div className='col-8 col-md-10'><h5>Order Id: {props.order.id}</h5></div>
-                        <div className='col-4 col-md-2'><span>Status: </span><Badge color="success" pill>Completed</Badge></div>
+                        <div className='col-4 col-md-2'><span>Status: </span><Badge color={handleBadge(props.order.status)} pill>{props.order.status}</Badge></div>
                     </CardTitle>
                     <CardText
-                        className="mb-2"
+                        className="mb-1"
                     >
                         <div>Date: {new Date(props.order.orderTime).toString()}</div>
 
@@ -46,7 +53,7 @@ const Order = props => {
 
                         <div>
                             <Button
-                                style={{ backgroundColor: '#d70f64', border: 'none', color: 'white' }}
+                                color="primary" variant="contained"
                                 onClick={toggleModal}
                             >
                                 Details
@@ -99,7 +106,7 @@ const Order = props => {
                                 <h5 style={{ fontWeight: 'bold' }}>BDT {props.order.price}</h5>
                             </div>
                             <div className='col-3 text-end'>
-                                <Button className='btn' color="secondary" size="small" onClick={toggleModal}
+                                <Button color="secondary" variant='contained' size="small" onClick={toggleModal}
                                 > Cancel </Button> </div>
                         </div>
                     </ModalBody>

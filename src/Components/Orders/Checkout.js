@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Button, Modal, ModalBody } from 'reactstrap';
+import { Modal, ModalBody } from 'reactstrap';
 import { Table } from 'reactstrap';
 import { useCart } from "react-use-cart";
 import axios from 'axios';
@@ -14,6 +14,8 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import CallIcon from '@mui/icons-material/Call';
 import { useSelector, useDispatch, } from 'react-redux';
 import { resetVoucher } from '../../redux/grocersssSlice';
+import Footer2 from '../Footer/Footer2';
+import Button from '@mui/material/Button';
 
 const Checkout = () => {
     const {
@@ -68,7 +70,7 @@ const Checkout = () => {
             voucherName: data.voucherName,
             voucherAmount: data.voucherAmount,
             orderTime: new Date(),
-
+            status: "Pending"
         }
         console.log(order);
 
@@ -177,6 +179,7 @@ const Checkout = () => {
                 <hr />
                 <Formik
                     initialValues={{
+                        name: data.userData.fname + " " + data.userData.lname,
                         deliveryAddress: "",
                         phone: "",
                         paymentType: "Cash On Delivery",
@@ -261,25 +264,28 @@ const Checkout = () => {
                             </Box>
                             <br />
 
-                            <Button type='submit' style={{ backgroundColor: '#d70f64' }} className="mr-auto" disabled={disablePlaceOrder}  >Place Order</Button>
-                            <Link to={'/'}>
-                                <Button color='secondary' className='mx-1'>Cancel</Button>
-                            </Link>
+                            <Button type='submit' color='primary' variant='contained' className="mr-auto" disabled={disablePlaceOrder}  >Place Order</Button>
+                            <Button onClick={() => navigate('/', { replace: true })} color='secondary' variant='contained' className='mx-1'>Cancel</Button>
+
 
                         </form>)}
                 </Formik>
             </div>
+
         </div >
     )
     document.title = "Checkout | GROCERSSS"
     return (
-        <div style={{ marginTop: '100px', marginBottom: '50px' }}>
-            {isLoading ? <Spinner /> : form}
-
-            <Modal isOpen={isModalOpen}>
-                <ModalBody onClick={() => navigate('/')}><p>{modalMsg}</p></ModalBody>
-            </Modal>
+        <div>
+            <div style={{ marginTop: '100px', marginBottom: '50px' }}>
+                {isLoading ? <Spinner /> : form}
+                <Modal isOpen={isModalOpen}>
+                    <ModalBody onClick={() => navigate('/')}><p>{modalMsg}</p></ModalBody>
+                </Modal>
+            </div>
+            <Footer2 />
         </div>
+
     );
 };
 

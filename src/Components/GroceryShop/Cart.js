@@ -106,9 +106,9 @@ const Cart = () => {
                     <br />
                 </div>
                 <div className="col-auto mb-2">
-                    <button onClick={() => { handleClickVariant('error'); emptyCart() }} className="btn btn-secondary">
+                    <Button onClick={() => { handleClickVariant('error'); emptyCart() }} color="secondary" variant="contained">
                         Clear Cart
-                    </button>
+                    </Button>
                 </div>
             </div>
         </section >

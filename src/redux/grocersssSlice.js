@@ -110,7 +110,8 @@ export const grocersssSlice = createSlice({
                 ...state,
                 token: null,
                 userId: null,
-                appUser: null
+                appUser: null,
+                userData: null
             }
 
         },
@@ -136,11 +137,24 @@ export const grocersssSlice = createSlice({
     }
 });
 
+//Fetched ProductData through multiple dispatch
+export const fetchProductData = () => dispatch => {
+
+    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/productData.json')
+        .then(response => {
+            dispatch(loadProductData(response.data));
+        })
+        .catch(err => {
+            dispatch(productDataFailed());
+        })
+}
+
 //Fetched Orders through multiple dispatch
 export const fetchOrders = () => dispatch => {
     const queryParams = '&orderBy="userId"&equalTo="' + localStorage.getItem('userId') + '"';
     axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json?auth=' + localStorage.getItem('token') + queryParams)
         .then(response => {
+            console.log(response.data);
             dispatch(loadOrders(response.data));
         })
         .catch(err => {
@@ -148,7 +162,7 @@ export const fetchOrders = () => dispatch => {
         })
 }
 
-//Worked with SignUp and SignIn, added data to both authentication and database, also received username for avatar
+//Worked with SignUp and SignIn, added data to both authentication and database, also received username foravatar
 export const auth = (email, password, fname, lname, mode, appUser) => dispatch => {
     dispatch(authLoading(true));
     const authData = {
@@ -158,7 +172,7 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
     }
     console.log(appUser);
     let authUrl = null;
-    if (mode === "Sign Up" || mode === "Admin Sign Up") {
+    if (mode === "Sign Up" || mode === "Rider Sign Up") {
         authUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=";
     } else {
         authUrl = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
@@ -174,7 +188,7 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
             localStorage.setItem('appUser', appUser);
             const expirationTime = new Date(new Date().getTime() + response.data.expiresIn * 1000);
             localStorage.setItem('expirationTime', expirationTime);
-            if (mode === "Sign Up" || mode === "Admin Sign Up") {
+            if (mode === "Sign Up" || mode === "Rider Sign Up") {
                 let userData = {
                     userId: response.data.localId,
                     fname: fname,
@@ -182,8 +196,9 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                     email: email,
                     registered: new Date()
                 }
-                mode === "Sign Up" ? axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData) : (appUser === "Admin" ? axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/adminData.json", userData) : axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json", userData))
+                mode === "Sign Up" ? axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData) : axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json", userData)
 
+                axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData)
             }
 
 
@@ -196,7 +211,7 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                             dispatch(userDataRedux(res.data[key]));
                         }
                     })
-            } else if (appUser === "Admin") {
+            } /*else if (appUser === "Admin") {
                 axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/adminData.json?auth=' + localStorage.getItem('token') + queryParams)
                     .then(res => {
                         for (let key in res.data) {
@@ -205,7 +220,7 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                             dispatch(userDataRedux(res.data[key]));
                         }
                     })
-            } else {
+            } */else {
                 axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json?auth=' + localStorage.getItem('token') + queryParams)
                     .then(res => {
                         for (let key in res.data) {

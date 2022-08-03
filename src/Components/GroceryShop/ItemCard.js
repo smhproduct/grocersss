@@ -4,7 +4,9 @@ import './ItemCard.css';
 import IconButton from '@mui/material/IconButton';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { useSnackbar } from 'notistack';
-import { ModalBody, Modal, Button } from "reactstrap";
+import { ModalBody, Modal } from "reactstrap";
+import Button from '@mui/material/Button';
+
 
 const ItemCard = (props) => {
 
@@ -48,15 +50,15 @@ const ItemCard = (props) => {
                         <div className="col align-middle" width='50%' style={{ textAlign: 'center', paddingTop: '15%' }}>
                             <h3>{props.title}</h3>
                             <h2>Tk. {props.price}</h2>
-                            <Button className="btn"
-                                color="danger" size="small"
-                                outline
+                            <Button
+                                color="primary" size="small"
+                                variant="contained"
                                 onClick={() => addItemHandler(props)}
                             >
                                 Add To Cart
                             </Button>
                             {' '}
-                            <Button className="btn" color="secondary" size="small" outline onClick={toggleModal}>
+                            <Button color="secondary" size="small" variant="contained" onClick={toggleModal}>
                                 Cancel
                             </Button>
                         </div>
