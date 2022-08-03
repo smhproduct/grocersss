@@ -43,9 +43,9 @@ const Header = () => {
     const userData = useSelector((state) => {
         return state.userData;
     })
-    const appUser = useSelector(state => {
+    /* const appUser = useSelector(state => {
         return state.appUser;
-    })
+    }) */
 
 
     const [anchorEl, setAnchorEl] = useState(null);

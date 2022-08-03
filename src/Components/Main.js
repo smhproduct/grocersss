@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import Header from "./Header/Header";
-import Footer from './Footer/Footer';
-import Footer2 from "./Footer/Footer2";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "./GroceryShop/Home";
-import Cart from "./GroceryShop/Cart";
 import CartAdvanced from "./GroceryShop/CartAdvanced";
 import { CartProvider } from "react-use-cart";
 import { Route, Routes, Navigate } from "react-router-dom";
@@ -15,8 +12,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useSelector, useDispatch } from "react-redux";
 import { authCheck } from "../redux/grocersssSlice";
 import Logout from "./Auth/Logout";
-import AdminHome from "./GroceryShop/AdminHome";
-import RiderHome from "./GroceryShop/RiderHome";
 import Auth from "./Auth/Auth";
 import RiderAuth from "./Auth/RiderAuth";
 

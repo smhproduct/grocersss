@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table } from 'reactstrap';
 import { useCart } from "react-use-cart";
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { ModalBody, Modal } from "reactstrap";
 import Box from '@mui/material/Box';
 import { TextField } from '@mui/material';

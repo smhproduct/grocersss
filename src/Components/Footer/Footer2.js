@@ -4,7 +4,6 @@ import { Table } from 'reactstrap';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import { Link } from 'react-router-dom';
 import PhoneIcon from '@mui/icons-material/Phone';
 import AddLocationAltIcon from '@mui/icons-material/AddLocationAlt';
 import EmailIcon from '@mui/icons-material/Email';

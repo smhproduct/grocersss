@@ -9,9 +9,8 @@ import { Input, Alert } from 'reactstrap';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import axios from 'axios';
 import { useSelector, useDispatch, } from 'react-redux';
-import { loadProductData, productDataFailed, fetchProductData } from '../../redux/grocersssSlice'
+import { fetchProductData } from '../../redux/grocersssSlice'
 import Spinner from '../Spinner/Spinner';
 import Footer2 from "../Footer/Footer2";
 
