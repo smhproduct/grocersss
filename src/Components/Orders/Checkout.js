@@ -70,7 +70,8 @@ const Checkout = () => {
             voucherName: data.voucherName,
             voucherAmount: data.voucherAmount,
             orderTime: new Date(),
-            status: "Pending"
+            status: "Pending",
+            rider: "None"
         }
         console.log(order);
 

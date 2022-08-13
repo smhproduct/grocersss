@@ -75,7 +75,7 @@ const Order = props => {
                     <ModalHeader className='row'>
                         {/* Order Id:{props.order.id} */}
                         <div className='col'><h5>Order Id: {props.order.id}</h5></div>
-                        <div className='col' style={{ fontSize: '15px' }}><span>Status: </span><Badge color="success" pill>Completed</Badge></div>
+                        <div className='col' style={{ fontSize: '15px' }}><span>Status: </span><Badge color={handleBadge(props.order.status)} pill>{props.order.status}</Badge></div>
                     </ModalHeader>
                     <ModalBody>
                         <div className='row'>

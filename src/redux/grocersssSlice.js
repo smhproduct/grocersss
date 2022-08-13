@@ -188,7 +188,7 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
             localStorage.setItem('appUser', appUser);
             const expirationTime = new Date(new Date().getTime() + response.data.expiresIn * 1000);
             localStorage.setItem('expirationTime', expirationTime);
-            if (mode === "Sign Up" || mode === "Rider Sign Up") {
+            if (mode === "Sign Up") {
                 let userData = {
                     userId: response.data.localId,
                     fname: fname,
@@ -196,39 +196,43 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                     email: email,
                     registered: new Date()
                 }
-                mode === "Sign Up" ? axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData) : axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json", userData)
+                axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData).then(res => dispatch(userDataRedux(userData)))
 
-                axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData)
             }
 
+            else if (mode === "Rider Sign Up") {
+                let userData = {
+                    userId: response.data.localId,
+                    fname: fname,
+                    lname: lname,
+                    email: email,
+                    registered: new Date(),
+                    status: "Idle"
+                }
+                axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json", userData).then(res => dispatch(userDataRedux(userData)))
+            }
 
-            const queryParams = '&orderBy="userId"&equalTo="' + localStorage.getItem('userId') + '"';
-            if (appUser === "User") {
-                axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json?auth=' + localStorage.getItem('token') + queryParams)
-                    .then(res => {
-                        for (let key in res.data) {
-                            console.log(res.data[key]);
-                            dispatch(userDataRedux(res.data[key]));
-                        }
-                    })
-            } /*else if (appUser === "Admin") {
-                axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/adminData.json?auth=' + localStorage.getItem('token') + queryParams)
-                    .then(res => {
-                        for (let key in res.data) {
-                            console.log(res.data[key]);
-                            console.log('eta admin');
-                            dispatch(userDataRedux(res.data[key]));
-                        }
-                    })
-            } */else {
-                axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json?auth=' + localStorage.getItem('token') + queryParams)
-                    .then(res => {
-                        for (let key in res.data) {
-                            console.log(res.data[key]);
-                            console.log('eta rider');
-                            dispatch(userDataRedux(res.data[key]));
-                        }
-                    })
+            else {
+                const queryParams = '&orderBy="userId"&equalTo="' + localStorage.getItem('userId') + '"';
+                if (appUser === "User") {
+                    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json?auth=' + localStorage.getItem('token') + queryParams)
+                        .then(res => {
+                            for (let key in res.data) {
+                                console.log(res.data[key]);
+                                dispatch(userDataRedux(res.data[key]));
+                            }
+                        })
+                } else {
+                    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json?auth=' + localStorage.getItem('token') + queryParams)
+                        .then(res => {
+                            for (let key in res.data) {
+                                console.log(res.data[key]);
+                                console.log('eta rider');
+                                dispatch(userDataRedux(res.data[key]));
+                            }
+                        })
+                }
+
             }
 
             dispatch(authSuccess(response.data));
