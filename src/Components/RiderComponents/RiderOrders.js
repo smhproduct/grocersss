@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch, } from 'react-redux';
 import Spinner from '../Spinner/Spinner';
-import Order from './Order';
-import { fetchOrders, fetchRiders } from '../../redux/grocersssSlice';
+import { fetchRiderOrders } from '../../redux/grocersssSlice';
+import Order from '../Orders/Order';
+import RiderOrder from './RiderOrder';
 
-const Orders = () => {
+const RiderOrders = () => {
     const data = useSelector((state) => {
         return state
     })
@@ -12,14 +13,11 @@ const Orders = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(fetchOrders());
-        dispatch(fetchRiders());
+        dispatch(fetchRiderOrders());
     }, [dispatch]);
 
-
-
     let orders = null;
-    if (data.orderErr) {
+    if (data.riderOrderErr) {
         orders = <p style={{
             border: '1px solid grey',
             boxShadow: '1px 1px #888888',
@@ -30,7 +28,7 @@ const Orders = () => {
 
         }}>Sorry Failed to Load Orders</p>
     } else {
-        if (data.orders.length === 0) {
+        if (data.riderOrders.length === 0) {
             orders = <p style={{
                 border: '1px solid grey',
                 boxShadow: '1px 1px #888888',
@@ -41,17 +39,17 @@ const Orders = () => {
             }}>You Have No Orders</p>
 
         } else {
-            orders = data.orders.slice(0).reverse().map(order => {
-                return <Order order={order} riders={data.riders} key={order.id} />
+            orders = data.riderOrders.slice(0).reverse().map(order => {
+                return <RiderOrder order={order} key={order.id} />
             })
         }
     }
     document.title = "Orders | GROCERSSS";
     return (
-        <div /* style={{ marginTop: '90px' }} */>
-            {data.orderLoading ? <Spinner /> : orders}
+        <div>
+            {data.riderOrderLoading ? <Spinner /> : orders}
         </div>
     );
 };
 
-export default Orders;
+export default RiderOrders;

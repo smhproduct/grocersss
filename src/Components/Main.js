@@ -14,6 +14,8 @@ import { authCheck } from "../redux/grocersssSlice";
 import Logout from "./Auth/Logout";
 import Auth from "./Auth/Auth";
 import RiderAuth from "./Auth/RiderAuth";
+import RiderOrders from "./RiderComponents/RiderOrders";
+import RiderHome from './GroceryShop/RiderHome';
 
 
 const Main = () => {
@@ -71,7 +73,7 @@ const Main = () => {
         } */else if (appUser === "Rider") {
             routes = (<Routes>
                 {/* <Route path='/' element={<RiderHome />} /> */}
-                <Route path="/" element={<Orders />} />
+                <Route path="/" element={<RiderOrders />} />
                 <Route path="/logout" element={<Logout />} />
                 <Route path="*" element={<Navigate replace to="/" />} />
             </Routes>)

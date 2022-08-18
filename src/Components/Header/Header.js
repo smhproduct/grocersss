@@ -40,6 +40,9 @@ const Header = () => {
     const token = useSelector((state) => {
         return state.token;
     })
+
+    const appUser = localStorage.getItem('appUser');
+
     const userData = useSelector((state) => {
         return state.userData;
     })
@@ -61,70 +64,19 @@ const Header = () => {
     }, [userData]);
 
     let links = null;
-    if (token !== null /* && appUser !== null */) {
-        /* links = (
-           <Nav>
-               <NavItem>
-                   <NavLink to="/login" className="NavLink" style={{ marginBottom: '10px' }}>Login</NavLink>
-               </NavItem>
-           </Nav>
-       ) 
-   } else { */
-        /* if (appUser === "User") { */
-        links = (
-            <Nav>
-                <NavItem>
-                    <NavLink to="/" className="NavLink">Home</NavLink>
-                </NavItem>
-                <NavItem style={{ marginTop: '-5px' }}>
-                    <NavLink to="/cartadvanced" className="NavLink Cart"><button type="button" className="p-0 btn position-relative">
-                        <img width='38px' height='40px' src={CartIcon} alt="Cart" />{badge}
-                    </button></NavLink>
-                </NavItem>
-
-                <NavItem style={{}}>
-                    <div className="d-flex flex-row">
-                        <div style={{ marginRight: '8px', fontSize: "1.1rem", color: 'white' }} className="">{userData?.fname.toString().toUpperCase()}
-                        </div>
-                        <div>
-
-                            <Avatar
-                                id="fade-button"
-                                sx={{ width: 28, height: 28 }}
-                                aria-controls={open ? 'fade-menu' : undefined}
-                                aria-haspopup="true"
-                                aria-expanded={open ? 'true' : undefined}
-                                onClick={handleClick}
-                                style={{ color: '#d70f64', backgroundColor: 'white', cursor: 'pointer' }}></Avatar>
-                            <Menu
-                                id="fade-menu"
-                                MenuListProps={{
-                                    'aria-labelledby': 'fade-button',
-                                }}
-                                anchorEl={anchorEl}
-                                open={open}
-                                onClose={handleClose}
-                                TransitionComponent={Fade}
-                            >
-                                <NavItem style={{ padding: "2px" }}>
-                                    <NavLink to="orders" className="avatar" onClick={handleClose}>Orders <ArticleIcon sx={{ color: "primary", width: 18, height: 18 }} /></NavLink>
-                                </NavItem>
-                                <hr width="80%" style={{ marginLeft: 'auto', marginRight: 'auto' }} />
-                                <NavItem style={{ padding: "2px" }}>
-                                    <NavLink to="/logout" className="avatar" onClick={handleClose}>Logout <LogoutIcon sx={{ color: "primary", width: 18, height: 18 }} /></NavLink>
-                                </NavItem>
-                            </Menu>
-                        </div>
-                    </div>
-                </NavItem>
-            </Nav>
-        )
-        /* } else if (appUser === "Admin") {
+    if (token !== null) {
+        if (appUser === "User") {
             links = (
                 <Nav>
                     <NavItem>
                         <NavLink to="/" className="NavLink">Home</NavLink>
                     </NavItem>
+                    <NavItem style={{ marginTop: '-5px' }}>
+                        <NavLink to="/cartadvanced" className="NavLink Cart"><button type="button" className="p-0 btn position-relative">
+                            <img width='38px' height='40px' src={CartIcon} alt="Cart" />{badge}
+                        </button></NavLink>
+                    </NavItem>
+
                     <NavItem style={{}}>
                         <div className="d-flex flex-row">
                             <div style={{ marginRight: '8px', fontSize: "1.1rem", color: 'white' }} className="">{userData?.fname.toString().toUpperCase()}
@@ -149,11 +101,11 @@ const Header = () => {
                                     onClose={handleClose}
                                     TransitionComponent={Fade}
                                 >
-                                    <NavItem>
+                                    <NavItem style={{ padding: "2px" }}>
                                         <NavLink to="orders" className="avatar" onClick={handleClose}>Orders <ArticleIcon sx={{ color: "primary", width: 18, height: 18 }} /></NavLink>
                                     </NavItem>
                                     <hr width="80%" style={{ marginLeft: 'auto', marginRight: 'auto' }} />
-                                    <NavItem>
+                                    <NavItem style={{ padding: "2px" }}>
                                         <NavLink to="/logout" className="avatar" onClick={handleClose}>Logout <LogoutIcon sx={{ color: "primary", width: 18, height: 18 }} /></NavLink>
                                     </NavItem>
                                 </Menu>
@@ -166,8 +118,10 @@ const Header = () => {
             links = (
                 <Nav>
                     <NavItem>
-                        <NavLink to="/" className="NavLink">Home</NavLink>
+                        <NavLink to="/" className="NavLink">Tasks</NavLink>
                     </NavItem>
+
+
                     <NavItem style={{}}>
                         <div className="d-flex flex-row">
                             <div style={{ marginRight: '8px', fontSize: "1.1rem", color: 'white' }} className="">{userData?.fname.toString().toUpperCase()}
@@ -192,11 +146,8 @@ const Header = () => {
                                     onClose={handleClose}
                                     TransitionComponent={Fade}
                                 >
-                                    <NavItem>
-                                        <NavLink to="orders" className="avatar" onClick={handleClose}>Orders <ArticleIcon sx={{ color: "primary", width: 18, height: 18 }} /></NavLink>
-                                    </NavItem>
-                                    <hr width="80%" style={{ marginLeft: 'auto', marginRight: 'auto' }} />
-                                    <NavItem>
+
+                                    <NavItem style={{ padding: "2px" }}>
                                         <NavLink to="/logout" className="avatar" onClick={handleClose}>Logout <LogoutIcon sx={{ color: "primary", width: 18, height: 18 }} /></NavLink>
                                     </NavItem>
                                 </Menu>
@@ -205,7 +156,7 @@ const Header = () => {
                     </NavItem>
                 </Nav>
             )
-        } */
+        }
 
     } else {
         links = (

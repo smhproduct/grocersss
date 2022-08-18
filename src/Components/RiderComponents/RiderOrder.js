@@ -4,9 +4,14 @@ import Button from '@mui/material/Button';
 import axios from 'axios';
 import { useSnackbar } from 'notistack';
 
-const Order = props => {
+const RiderOrder = props => {
     const [modal, setModal] = useState(false);
     const toggleModal = () => setModal(!modal);
+
+    const { enqueueSnackbar } = useSnackbar();
+    const handleClickVariant = (variant) => {
+        enqueueSnackbar(props.order.id + 'has been delivered, awaiting confirmation', { variant });
+    };
 
     const handleBadge = (status) => {
         if (status === "Pending") return "warning";
@@ -16,11 +21,6 @@ const Order = props => {
         else return "danger";
 
     }
-
-    const { enqueueSnackbar } = useSnackbar();
-    const handleClickVariant = (variant) => {
-        enqueueSnackbar(props.order.id + 'is received!', { variant });
-    };
 
     const itemSummary = props.order.items?.map(item => {
         return (
@@ -67,23 +67,21 @@ const Order = props => {
                             >
                                 Details
                             </Button>
+
                             <Button
                                 color="warning" variant="contained"
-                                style={{ marginLeft: "10px" }}
                                 onClick={() => Promise.all([
-                                    axios.patch("https://grocersss-d8d44-default-rtdb.firebaseio.com/orders/" + props.order.id + ".json", { status: 'Completed' }),
-
-                                    props.riders.slice(0).reverse()
-                                        .filter(rider => rider.userId === props.order.rider)
-                                        .map(rider => axios.patch("https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData/" + rider.id + ".json", { status: 'Idle' }))
+                                    axios.patch("https://grocersss-d8d44-default-rtdb.firebaseio.com/orders/" + props.order.id + ".json", { status: 'Awaiting Confirmation' }),
                                 ])
 
                                     .then(response => {
                                         handleClickVariant('success');
                                     })}
-                                disabled={props.order.status !== "Awaiting Confirmation"}
+
+                                disabled={props.order.status !== "Processing"}
+                                style={{ marginLeft: "10px" }}
                             >
-                                Received Delivery?
+                                Mark As Completed
                             </Button>
                         </div>
 
@@ -105,7 +103,9 @@ const Order = props => {
                         <div className='col' style={{ fontSize: '15px' }}><span>Status: </span><Badge color={handleBadge(props.order.status)} pill>{props.order.status}</Badge></div>
                     </ModalHeader>
                     <ModalBody>
-                        <div >Rider Id: {props.order.rider}</div>
+                        <div >Rider ID: {props.order.rider}</div>
+                        <div>Customer ID: {props.order.userId}</div>
+                        <div>Customer Name: {props.order.customer.name}</div>
                         <div className='row'>
                             <div className='col-12'>Purchased Items:</div>
                             <ul>{itemSummary}</ul>
@@ -146,4 +146,4 @@ const Order = props => {
 };
 
 
-export default Order;
+export default RiderOrder;

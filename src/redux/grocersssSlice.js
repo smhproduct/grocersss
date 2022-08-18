@@ -6,6 +6,14 @@ const initialState = {
     orderLoading: true,
     orderErr: false,
 
+    riders: [],
+    riderLoading: true,
+    riderErr: false,
+
+    riderOrders: [],
+    riderOrderLoading: true,
+    riderOrderErr: false,
+
     voucherName: '',
     voucherAmount: 0,
 
@@ -49,6 +57,54 @@ export const grocersssSlice = createSlice({
                 orderLoading: false
             }
         },
+
+        loadRiders: (state, action) => {
+            let riders = [];
+            for (let key in action.payload) {
+                riders.push({
+                    ...action.payload[key],
+                    id: key
+                })
+            }
+            return {
+                ...state,
+                riders: riders,
+                riderLoading: false,
+                riderErr: false
+            }
+        },
+        riderLoadFailed: (state) => {
+            return {
+                ...state,
+                riderErr: true,
+                riderLoading: false
+            }
+        },
+
+        loadRiderOrders: (state, action) => {
+            let riderOrders = [];
+            for (let key in action.payload) {
+                riderOrders.push({
+                    ...action.payload[key],
+                    id: key
+                })
+            }
+            return {
+                ...state,
+                riderOrders: riderOrders,
+                riderOrderLoading: false,
+                riderOrderErr: false
+            }
+        },
+        riderOrderLoadFailed: (state) => {
+            return {
+                ...state,
+                riderOrderErr: true,
+                riderOrderLoading: false
+            }
+        },
+
+
         loadProductData: (state, action) => {
             let productData = [];
             for (let key in action.payload) {
@@ -162,6 +218,32 @@ export const fetchOrders = () => dispatch => {
         })
 }
 
+//Fetched Orders through multiple dispatch
+export const fetchRiderOrders = () => dispatch => {
+    let queryParamss = '&orderBy="rider"&equalTo="' + localStorage.getItem('userId') + '"';
+    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/orders.json?auth=' + localStorage.getItem('token') + queryParamss)
+        .then(response => {
+            console.log(response.data);
+            dispatch(loadRiderOrders(response.data));
+        })
+        .catch(err => {
+            dispatch(riderOrderLoadFailed());
+        })
+}
+
+//Fetched Riders through multiple dispatch
+export const fetchRiders = () => dispatch => {
+
+    axios.get('https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json?auth=' + localStorage.getItem('token')/*  + queryParams */)
+        .then(response => {
+            //console.log(response.data);
+            dispatch(loadRiders(response.data));
+        })
+        .catch(err => {
+            dispatch(riderLoadFailed());
+        })
+}
+
 //Worked with SignUp and SignIn, added data to both authentication and database, also received username foravatar
 export const auth = (email, password, fname, lname, mode, appUser) => dispatch => {
     dispatch(authLoading(true));
@@ -263,6 +345,6 @@ export const authCheck = () => dispatch => {
 }
 
 
-export const { loadOrders, orderLoadFailed, addVoucher, resetVoucher, loadProductData, productDataFailed, appUserSuccess, authSuccess, logout, authLoading, authFailed, userDataRedux } = grocersssSlice.actions;
+export const { loadOrders, orderLoadFailed, loadRiders, riderLoadFailed, loadRiderOrders, riderOrderLoadFailed, addVoucher, resetVoucher, loadProductData, productDataFailed, appUserSuccess, authSuccess, logout, authLoading, authFailed, userDataRedux } = grocersssSlice.actions;
 
 export default grocersssSlice.reducer;

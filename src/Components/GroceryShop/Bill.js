@@ -131,7 +131,7 @@ const Bill = () => {
                         {error ? <label style={{ color: 'red' }}>{errMsg}</label> : ""}
                         <br />
 
-                        <Button color='primary' variant='contained' className="mr-auto" >Apply Voucher</Button>
+                        <Button type='submit' color='primary' variant='contained' className="mr-auto" >Apply Voucher</Button>
 
                         <Button color='secondary' variant='contained' className='mx-1' onClick={toggleModal}>Cancel</Button>
 
