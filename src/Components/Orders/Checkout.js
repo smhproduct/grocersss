@@ -35,11 +35,6 @@ const Checkout = () => {
     const dispatch = useDispatch();
 
     const [state, setState] = useState({
-        /* values: {
-            deliveryAddress: "",
-            phone: "",
-            paymentType: "Cash On Delivery"
-        }, */
         isLoading: false,
         isModalOpen: false,
         modalMsg: '',
@@ -180,7 +175,7 @@ const Checkout = () => {
                 <hr />
                 <Formik
                     initialValues={{
-                        name: data.userData.fname + " " + data.userData.lname,
+                        name: localStorage.getItem('fname') + " " + localStorage.getItem('lname'),
                         deliveryAddress: "",
                         phone: "",
                         paymentType: "Cash On Delivery",

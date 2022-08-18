@@ -79,7 +79,7 @@ const Header = () => {
 
                     <NavItem style={{}}>
                         <div className="d-flex flex-row">
-                            <div style={{ marginRight: '8px', fontSize: "1.1rem", color: 'white' }} className="">{userData?.fname.toString().toUpperCase()}
+                            <div style={{ marginRight: '8px', fontSize: "1.1rem", color: 'white' }} className="">{localStorage.getItem('fname')?.toString().toUpperCase()}
                             </div>
                             <div>
 
@@ -124,7 +124,7 @@ const Header = () => {
 
                     <NavItem style={{}}>
                         <div className="d-flex flex-row">
-                            <div style={{ marginRight: '8px', fontSize: "1.1rem", color: 'white' }} className="">{userData?.fname.toString().toUpperCase()}
+                            <div style={{ marginRight: '8px', fontSize: "1.1rem", color: 'white' }} className="">{localStorage.getItem('fname')?.toString().toUpperCase()}
                             </div>
                             <div>
 

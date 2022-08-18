@@ -291,6 +291,8 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                     registered: new Date(),
                     status: "Idle"
                 }
+                localStorage.setItem('fname', fname);
+                localStorage.setItem('lname', lname);
                 axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/riderData.json", userData).then(res => dispatch(userDataRedux(userData)))
             }
 
@@ -301,6 +303,8 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                         .then(res => {
                             for (let key in res.data) {
                                 console.log(res.data[key]);
+                                localStorage.setItem('fname', res.data[key].fname);
+                                localStorage.setItem('lname', res.data[key].lname);
                                 dispatch(userDataRedux(res.data[key]));
                             }
                         })
@@ -310,6 +314,8 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                             for (let key in res.data) {
                                 console.log(res.data[key]);
                                 console.log('eta rider');
+                                localStorage.setItem('fname', res.data[key].fname);
+                                localStorage.setItem('lname', res.data[key].lname);
                                 dispatch(userDataRedux(res.data[key]));
                             }
                         })
