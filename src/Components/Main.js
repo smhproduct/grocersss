@@ -15,7 +15,6 @@ import Logout from "./Auth/Logout";
 import Auth from "./Auth/Auth";
 import RiderAuth from "./Auth/RiderAuth";
 import RiderOrders from "./RiderComponents/RiderOrders";
-import RiderHome from './GroceryShop/RiderHome';
 
 
 const Main = () => {

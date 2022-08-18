@@ -17,7 +17,6 @@ const Orders = () => {
     }, [dispatch]);
 
 
-
     let orders = null;
     if (data.orderErr) {
         orders = <p style={{

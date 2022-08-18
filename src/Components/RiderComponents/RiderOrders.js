@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useSelector, useDispatch, } from 'react-redux';
 import Spinner from '../Spinner/Spinner';
 import { fetchRiderOrders } from '../../redux/grocersssSlice';
-import Order from '../Orders/Order';
 import RiderOrder from './RiderOrder';
 
 const RiderOrders = () => {
