@@ -9,6 +9,10 @@ const Orders = () => {
         return state
     })
 
+    const compare = (a, b) => {
+        return new Date(b.orderTime) - new Date(a.orderTime);
+    }
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -40,7 +44,8 @@ const Orders = () => {
             }}>You Have No Orders</p>
 
         } else {
-            orders = data.orders.slice(0).reverse().map(order => {
+            orders = data.orders.slice(0).sort(compare).map(order => {
+
                 return <Order order={order} riders={data.riders} key={order.id} />
             })
         }

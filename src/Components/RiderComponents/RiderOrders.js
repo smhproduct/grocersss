@@ -9,6 +9,10 @@ const RiderOrders = () => {
         return state
     })
 
+    const compare = (a, b) => {
+        return new Date(b.orderTime) - new Date(a.orderTime);
+    }
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -25,7 +29,7 @@ const RiderOrders = () => {
             marginBottom: '10px',
             widht: '80%'
 
-        }}>Sorry Failed to Load Orders</p>
+        }}>Sorry Failed to Load  Orders</p>
     } else {
         if (data.riderOrders.length === 0) {
             orders = <p style={{
@@ -38,7 +42,7 @@ const RiderOrders = () => {
             }}>You Have No Orders</p>
 
         } else {
-            orders = data.riderOrders.slice(0).reverse().map(order => {
+            orders = data.riderOrders.slice(0).sort(compare).map(order => {
                 return <RiderOrder order={order} key={order.id} />
             })
         }
