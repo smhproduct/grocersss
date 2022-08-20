@@ -278,6 +278,8 @@ export const auth = (email, password, fname, lname, mode, appUser) => dispatch =
                     email: email,
                     registered: new Date()
                 }
+                localStorage.setItem('fname', fname);
+                localStorage.setItem('lname', lname);
                 axios.post("https://grocersss-d8d44-default-rtdb.firebaseio.com/userData.json", userData).then(res => dispatch(userDataRedux(userData)))
 
             }
